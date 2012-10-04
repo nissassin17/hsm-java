@@ -1,0 +1,35 @@
+Oct 05, 2012 12:42:12 AM org.hedspi.posgresql.hedspi_student_manager.control.Control start
+INFO: System starts
+Oct 05, 2012 12:42:12 AM org.hedspi.posgresql.hedspi_student_manager.control.Control start
+INFO: Open login window
+Oct 05, 2012 12:42:14 AM org.hedspi.posgresql.hedspi_student_manager.control.Control tryLogin
+INFO: Try login
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.control.Control tryLogin
+INFO: Login success
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.AddressService getAddresses
+INFO: Fetch list of cities from database
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.AddressService getAddresses
+INFO: Fetch list of cities
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.CoreService query
+INFO: Execute query SELECT "CY#", "Name" FROM "City"
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.AddressService getAddresses
+INFO: Fetch list of districts
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.CoreService query
+INFO: Execute query SELECT "DT#", "Name", "CY#" FROM "District"
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.ContactService getContacts
+INFO: Fetch raw data of contacts
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.CoreService query
+INFO: Execute query select "FirstName", "LastName", "Sex", "DOB", "Email", "Phone", "ImageUrl", "Notes", "Home", "CT#", "DT#" 
+from "Contact"
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.ClassService getClasses
+INFO: Fetch class list. Do not get student list now, because it could make infinite recursive
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.CoreService query
+INFO: Execute query select "CL#", "Name" from "Class"
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.StudentService getStudentList
+INFO: Fetch raw data of students' list
+Oct 05, 2012 12:42:15 AM org.hedspi.posgresql.hedspi_student_manager.service.CoreService query
+INFO: Execute query select "EnrollPoint", "EnrollYear", "CT#", "CL#", "MSSV" from "Student"
+Oct 05, 2012 12:42:16 AM org.hedspi.posgresql.hedspi_student_manager.control.Control tryLogin
+INFO: Show main function window
+Oct 05, 2012 12:42:28 AM org.hedspi.posgresql.hedspi_student_manager.control.Control fire
+INFO: System exits
