@@ -5,11 +5,11 @@ import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
 public class Student extends HedspiObject {
-	
+
 	public static final String ID_CODE = "ST#";
 	public static final String ENROLL_POINT_CODE = "EnrollPoint";
 	public static final String ENROLL_YEAR_CODE = "EnrollYear";
-	
+
 	public Contact getContact() {
 		return contact;
 	}
@@ -57,6 +57,7 @@ public class Student extends HedspiObject {
 	private int enrollYear;
 	private HedspiClass myClass;
 	private String Mssv;
+
 	public String getMssv() {
 		return Mssv;
 	}
@@ -78,8 +79,8 @@ public class Student extends HedspiObject {
 	public Student(String id) {
 		super(id);
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return getContact().getName();
 	}
 

@@ -6,7 +6,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
 public class OADateSpinner<T> extends OAComponentAbstract<Date, T> {
-	
+
 	JSpinner spinner;
 	SpinnerDateModel model;
 

@@ -6,11 +6,11 @@ import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
 public class HedspiClass extends HedspiObject {
-	
+
 	public static final String ID_CODE = "CL#";
 	public static final String NAME_CODE = "Name";
 	private static HedspiObjects<HedspiClass> classes;
-	
+
 	public static void setClasses(HedspiObjects<HedspiClass> classes) {
 		HedspiClass.classes = classes;
 	}
@@ -20,6 +20,7 @@ public class HedspiClass extends HedspiObject {
 	}
 
 	private String name;
+
 	public String getName() {
 		return name;
 	}

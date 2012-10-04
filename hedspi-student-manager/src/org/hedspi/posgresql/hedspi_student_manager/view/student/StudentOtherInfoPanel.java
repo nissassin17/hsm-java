@@ -128,24 +128,24 @@ public class StudentOtherInfoPanel extends JPanel {
 				.createLabel("Entroll year*");
 		add(lblEntrollYear, "2, 8, right, default");
 
+		oaEnrollYear = new OANumberSpinner<Student>(
+				new IObjectUpdater<Student, String>() {
 
-		oaEnrollYear = new OANumberSpinner<Student>(new IObjectUpdater<Student, String>() {
+					@Override
+					public void setValue(Student object, String value) {
+						try {
+							int year = Integer.parseInt(value);
+							object.setEnrollYear(year);
+						} catch (Exception e) {
 
-			@Override
-			public void setValue(Student object, String value) {
-				try{
-					int year = Integer.parseInt(value);
-					object.setEnrollYear(year);
-				} catch (Exception e){
-					
-				}
-			}
+						}
+					}
 
-			@Override
-			public String getValue(Student object) {
-				return String.valueOf(object.getEnrollYear());
-			}
-		}, 2000, 0, 3000, 1); 
+					@Override
+					public String getValue(Student object) {
+						return String.valueOf(object.getEnrollYear());
+					}
+				}, 2000, 0, 3000, 1);
 		spinnerEnrollYear = oaEnrollYear.getSpinner();
 		add(spinnerEnrollYear, "4, 8");
 

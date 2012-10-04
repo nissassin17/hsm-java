@@ -1,7 +1,7 @@
 package org.hedspi.posgresql.hedspi_student_manager.model.hedspi;
 
 public class HedspiObject implements Comparable<Object> {
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -28,8 +28,8 @@ public class HedspiObject implements Comparable<Object> {
 	}
 
 	private String id;
-	
-	public HedspiObject(String id){
+
+	public HedspiObject(String id) {
 		this.id = id;
 	}
 
@@ -40,11 +40,11 @@ public class HedspiObject implements Comparable<Object> {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return id;
 	}
-	
+
 	@Override
 	public int compareTo(Object arg0) {
 		return this.toString().compareTo(arg0.toString());

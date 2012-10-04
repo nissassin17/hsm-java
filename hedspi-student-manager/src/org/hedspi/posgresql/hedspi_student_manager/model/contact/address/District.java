@@ -4,11 +4,11 @@ import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
 public class District extends HedspiObject {
-	
+
 	public static final String ID_CODE = "DT#";
 	public static final String NAME_CODE = "Name";
 	private static HedspiObjects<District> districts;
-	
+
 	public static void setDistricts(HedspiObjects<District> districts) {
 		District.districts = districts;
 	}
@@ -31,7 +31,7 @@ public class District extends HedspiObject {
 
 	private String name;
 	private City city;
-	
+
 	public City getCity() {
 		return city;
 	}
@@ -59,8 +59,8 @@ public class District extends HedspiObject {
 	public void setMyCity(City myCity) {
 		this.city = myCity;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return getName();
 	}
 

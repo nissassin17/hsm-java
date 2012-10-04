@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JToggleButton;
 
 public class OAToggleButton<T> extends OAComponentAbstract<String, T> {
-	
+
 	private final static String TRUE = "true";
 	private final static String FALSE = "false";
-	
+
 	JToggleButton toggleButton;
 
 	public JToggleButton getToggleButton() {
@@ -20,7 +20,7 @@ public class OAToggleButton<T> extends OAComponentAbstract<String, T> {
 		super(objectUpdater, object);
 		toggleButton = new JToggleButton();
 		toggleButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				updateObjectValue();

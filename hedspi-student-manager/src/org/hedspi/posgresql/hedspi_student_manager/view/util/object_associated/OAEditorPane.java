@@ -5,7 +5,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class OAEditorPane<T> extends OAComponentAbstract<String, T> {
-	
+
 	JEditorPane editorPane;
 
 	public JEditorPane getEditorPane() {
@@ -20,17 +20,17 @@ public class OAEditorPane<T> extends OAComponentAbstract<String, T> {
 		super(objectUpdater, object);
 		editorPane = new JEditorPane();
 		editorPane.getDocument().addDocumentListener(new DocumentListener() {
-			
+
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
 				changedUpdate(arg0);
 			}
-			
+
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
 				changedUpdate(arg0);
 			}
-			
+
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
 				updateObjectValue();

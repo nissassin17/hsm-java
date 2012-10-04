@@ -17,24 +17,30 @@ import org.hedspi.posgresql.hedspi_student_manager.service.ContactService;
 import org.hedspi.posgresql.hedspi_student_manager.service.CoreService;
 import org.hedspi.posgresql.hedspi_student_manager.service.StudentService;
 
-public class Model implements IModel{
-	
+public class Model implements IModel {
+
 	private static Model instance;
-	private Model(){}
+
+	private Model() {
+	}
 
 	@Override
 	public void setData(String command, Object... data) {
-		switch (command){
+		switch (command) {
 		case "cloneDatabase":
 			cloneDatabase();
 			break;
 		default:
-			Control.getInstance().getLogger().log(Level.WARNING, "Unsupported setData operation  - " + command);
+			Control.getInstance()
+					.getLogger()
+					.log(Level.WARNING,
+							"Unsupported setData operation  - " + command);
 		}
 	}
 
 	private void cloneDatabase() {
-		Pair<HedspiObjects<City>, HedspiObjects<District>> val = AddressService.getAddresses();
+		Pair<HedspiObjects<City>, HedspiObjects<District>> val = AddressService
+				.getAddresses();
 		City.setCities(val.getObject0());
 		District.setDistricts(val.getObject1());
 		Contact.setContacts(ContactService.getContacts());
@@ -44,13 +50,17 @@ public class Model implements IModel{
 
 	@Override
 	public Object getData(String command, Object... data) {
-		switch(command){
+		switch (command) {
 		case "check-login":
 			Properties loginInfo = (Properties) data[0];
 			return CoreService.isGoodLogin(loginInfo);
-		
+
 		default:
-			Control.getInstance().getLogger().log(Level.WARNING, "Unsupported getData operation  - " + command + ". Return null");
+			Control.getInstance()
+					.getLogger()
+					.log(Level.WARNING,
+							"Unsupported getData operation  - " + command
+									+ ". Return null");
 			return null;
 		}
 	}

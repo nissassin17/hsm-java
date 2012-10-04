@@ -42,40 +42,37 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 	public CityPanel() {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("136dlu:grow"),},
-			new RowSpec[] {
+				ColumnSpec.decode("136dlu:grow"), }, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				RowSpec.decode("top:4dlu"), FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				RowSpec.decode("top:4dlu"),
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),}));
-		
+				RowSpec.decode("default:grow"), }));
+
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "2, 2, fill, fill");
-		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("56px"),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("86px:grow"),
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),}));
-		
-		JLabel lblName = DefaultComponentFactory.getInstance().createLabel("City name");
+		panel_1.setLayout(new FormLayout(
+				new ColumnSpec[] { ColumnSpec.decode("56px"),
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						ColumnSpec.decode("86px:grow"),
+						FormFactory.RELATED_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC, }, new RowSpec[] {
+						FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), }));
+
+		JLabel lblName = DefaultComponentFactory.getInstance().createLabel(
+				"City name");
 		panel_1.add(lblName, "1, 2, left, center");
-		
+
 		textField_1 = new JTextField();
 		panel_1.add(textField_1, "3, 2, fill, top");
 		textField_1.setColumns(10);
-		
+
 		JButton btnSave = new JButton("Save");
 		panel_1.add(btnSave, "5, 2");
-		
-		JLabel lblDistrictList = DefaultComponentFactory.getInstance().createLabel("Districts list");
+
+		JLabel lblDistrictList = DefaultComponentFactory.getInstance()
+				.createLabel("Districts list");
 		add(lblDistrictList, "2, 4, left, top");
-		
+
 		panel = new DistrictListEditor();
 		add(panel, "2, 6, fill, fill");
 	}

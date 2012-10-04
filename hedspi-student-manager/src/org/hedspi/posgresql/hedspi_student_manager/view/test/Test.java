@@ -11,8 +11,7 @@ public class Test extends JPanel {
 	 * Create the panel.
 	 */
 	public Test() {
-		setLayout(new FormLayout(new ColumnSpec[] {},
-			new RowSpec[] {}));
+		setLayout(new FormLayout(new ColumnSpec[] {}, new RowSpec[] {}));
 
 	}
 

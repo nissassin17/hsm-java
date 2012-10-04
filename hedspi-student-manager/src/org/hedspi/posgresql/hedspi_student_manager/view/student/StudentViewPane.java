@@ -14,7 +14,8 @@ import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-public class StudentViewPane extends JPanel implements IObjectViewPanel<Student> {
+public class StudentViewPane extends JPanel implements
+		IObjectViewPanel<Student> {
 
 	/**
 	 * 
@@ -29,30 +30,28 @@ public class StudentViewPane extends JPanel implements IObjectViewPanel<Student>
 	public StudentViewPane() {
 		setAutoscrolls(true);
 		setPreferredSize(new Dimension(491, 700));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("18px"),
-				ColumnSpec.decode("257px:grow"),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("193px:grow"),
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("fill:454px:grow"),}));
-		
+		setLayout(new FormLayout(
+				new ColumnSpec[] { ColumnSpec.decode("18px"),
+						ColumnSpec.decode("257px:grow"),
+						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+						ColumnSpec.decode("193px:grow"),
+						FormFactory.RELATED_GAP_COLSPEC,
+						FormFactory.DEFAULT_COLSPEC, }, new RowSpec[] {
+						FormFactory.LINE_GAP_ROWSPEC,
+						RowSpec.decode("fill:454px:grow"), }));
+
 		panel = new ContactPane();
 		add(panel, "2, 2, fill, fill");
-		
+
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "4, 2, fill, fill");
 		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				ColumnSpec.decode("default:grow"), }, new RowSpec[] {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("max(89dlu;default)"),
-				FormFactory.DEFAULT_ROWSPEC,}));
-		
+				FormFactory.DEFAULT_ROWSPEC, }));
+
 		studentOtherInfoPanel = new StudentOtherInfoPanel();
 		panel_1.add(studentOtherInfoPanel, "2, 2, fill, top");
 
@@ -67,10 +66,11 @@ public class StudentViewPane extends JPanel implements IObjectViewPanel<Student>
 		studentOtherInfoPanel.setStudent(obj);
 		panel.setContact(obj.getContact());
 	}
-	
-//	public Student cloneStudent(){
-//		Student student = new Student(id, contact, enrollPoint, enrollYear, myClass);
-//		return student;
-//	}
+
+	// public Student cloneStudent(){
+	// Student student = new Student(id, contact, enrollPoint, enrollYear,
+	// myClass);
+	// return student;
+	// }
 
 }

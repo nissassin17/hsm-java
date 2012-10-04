@@ -30,25 +30,23 @@ public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ObjectListPanel(IObjectViewPanel<T> viewPanelArg, HedspiObjects<T> hedspiObjectArg) {
+	public ObjectListPanel(IObjectViewPanel<T> viewPanelArg,
+			HedspiObjects<T> hedspiObjectArg) {
 		this.hedspiObject = hedspiObjectArg;
 		this.viewPanel = viewPanelArg;
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(91dlu;default):grow"),},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
+				ColumnSpec.decode("max(91dlu;default):grow"), }, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("max(97dlu;default):grow"),
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
-		
-		JLabel lblCitiesList = DefaultComponentFactory.getInstance().createLabel("Values list");
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, }));
+
+		JLabel lblCitiesList = DefaultComponentFactory.getInstance()
+				.createLabel("Values list");
 		add(lblCitiesList, "2, 4");
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "2, 6, fill, fill");
 		JList<T> list_1 = new JList<T>(hedspiObject.getListModel());
@@ -56,24 +54,24 @@ public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_1.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				if (!arg0.getValueIsAdjusting()){
-		            JList<T> list = (JList<T>)arg0.getSource();
-		            if (list.getSelectedValue() != null)
-		            	viewPanel.setObject(list.getSelectedValue());
+				if (!arg0.getValueIsAdjusting()) {
+					JList<T> list = (JList<T>) arg0.getSource();
+					if (list.getSelectedValue() != null)
+						viewPanel.setObject(list.getSelectedValue());
 				}
 			}
 		});
-		
+
 		SortBox<T> panel_1 = new SortBox<>(hedspiObject.getListModel());
 		add(panel_1, "2, 2, fill, top");
-		
+
 		JPanel panel = new JPanel();
 		add(panel, "2, 8, center, top");
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		JButton btnAdd = new JButton("Add");
 		panel.add(btnAdd);
-		
+
 		JButton btnRemove = new JButton("Remove");
 		panel.add(btnRemove);
 

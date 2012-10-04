@@ -10,8 +10,8 @@ import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.I
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OATextField;
 
 public class Contact extends HedspiObject {
-	
-	public static final String ID_CODE = "CT#"; 
+
+	public static final String ID_CODE = "CT#";
 	public static final String NAME_CODE = "Name";
 	public static final String FIRSTNAME_CODE = "FirstName";
 	public static final String LASTNAME_CODE = "LastName";
@@ -22,15 +22,15 @@ public class Contact extends HedspiObject {
 	public static final String IMAGE_CODE = "ImageUrl";
 	public static final String NOTE_CODE = "Notes";
 	public static final String HOME_CODE = "Home";
-	
+
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return getFirstName() + " " + getLastName();
 	}
-	
+
 	public Contact(String id, String note, NewLineListManipulator image,
 			NewLineListManipulator phone, Date dob, boolean isMan,
 			String firstName, String lastName, NewLineListManipulator email,
@@ -47,7 +47,7 @@ public class Contact extends HedspiObject {
 		this.home = home;
 		this.district = district;
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
@@ -124,8 +124,8 @@ public class Contact extends HedspiObject {
 	private NewLineListManipulator image;
 	private NewLineListManipulator phone;
 	private Date dob;
-	private boolean isMan;//true if is man
-	private String firstName; 
+	private boolean isMan;// true if is man
+	private String firstName;
 	private String lastName;
 	private NewLineListManipulator email;
 	private String home;
@@ -148,8 +148,8 @@ public class Contact extends HedspiObject {
 	public Contact(String id) {
 		super(id);
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return getName();
 	}
 

@@ -61,7 +61,7 @@ public class AllFunction extends JFrame implements IView {
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mnOperation = new JMenu("Operation");
 		menuBar.add(mnOperation);
 
@@ -102,10 +102,10 @@ public class AllFunction extends JFrame implements IView {
 
 		default:
 			Control.getInstance()
-			.getLogger()
-			.log(Level.WARNING,
-					"You have called FunctionWindow an operation that is not supported.\nCommand: {0}",
-					command);
+					.getLogger()
+					.log(Level.WARNING,
+							"You have called FunctionWindow an operation that is not supported.\nCommand: {0}",
+							command);
 			break;
 		}
 	}

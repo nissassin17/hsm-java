@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public  class SortBox<T extends Object> extends JPanel {
+public class SortBox<T extends Object> extends JPanel {
 
 	/**
 	 * 
@@ -32,13 +32,13 @@ public  class SortBox<T extends Object> extends JPanel {
 	private JRadioButton rdbtnCase;
 	private JRadioButton rdbtnNocase;
 	private JRadioButton rdbtnSmart;
-	
-	private void resort(final String text, final boolean isCase){
+
+	private void resort(final String text, final boolean isCase) {
 		ArrayList<T> list = new ArrayList<>();
-		for(int i = 0; i < model.getSize(); i++)
+		for (int i = 0; i < model.getSize(); i++)
 			list.add(model.getElementAt(i));
 		model.removeAllElements();
-		Collections.sort(list, new Comparator<Object>(){
+		Collections.sort(list, new Comparator<Object>() {
 
 			@Override
 			public int compare(Object arg0, Object arg1) {
@@ -53,15 +53,15 @@ public  class SortBox<T extends Object> extends JPanel {
 
 			private int getDistance(String string, String text) {
 				int[][] f = new int[string.length() + 1][text.length() + 1];
-				for(int i = 0; i <= string.length(); i++)
-					for(int j = 0; j <= text.length(); j++)
+				for (int i = 0; i <= string.length(); i++)
+					for (int j = 0; j <= text.length(); j++)
 						f[i][j] = 0;
-				for(int i = 1; i <= string.length(); i++)
-					for(int j = 1; j <= text.length(); j++){
+				for (int i = 1; i <= string.length(); i++)
+					for (int j = 1; j <= text.length(); j++) {
 						f[i][j] = Math.max(f[i - 1][j], f[i][j - 1]);
 						char c1 = string.charAt(i - 1);
 						char c2 = text.charAt(j - 1);
-						if (!isCase){
+						if (!isCase) {
 							c1 = Character.toLowerCase(c1);
 							c2 = Character.toLowerCase(c2);
 						}
@@ -69,9 +69,10 @@ public  class SortBox<T extends Object> extends JPanel {
 							f[i][j] = Math.max(f[i][j], f[i - 1][j - 1] + 1);
 					}
 				return f[string.length()][text.length()];
-			}});
-		
-		for(T it : list)
+			}
+		});
+
+		for (T it : list)
 			model.addElement(it);
 	}
 
@@ -83,39 +84,35 @@ public  class SortBox<T extends Object> extends JPanel {
 		setBounds(100, 100, 326, 67);
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
-		
+				ColumnSpec.decode("default:grow"), }, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, }));
+
 		JPanel panel = new JPanel();
 		add(panel, "2, 2, fill, top");
 		panel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("58px"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("86px:grow"),},
-			new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),}));
-		
-		JLabel lblSortBox = DefaultComponentFactory.getInstance().createLabel("Sort box");
+				ColumnSpec.decode("86px:grow"), }, new RowSpec[] {
+				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), }));
+
+		JLabel lblSortBox = DefaultComponentFactory.getInstance().createLabel(
+				"Sort box");
 		panel.add(lblSortBox, "1, 2, left, center");
-		
+
 		textField = new JTextField();
 		textField.getDocument().addDocumentListener(new DocumentListener() {
-			
+
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
 				insertUpdate(arg0);
 			}
-			
+
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
 				changedUpdate(arg0);
 			}
-			
+
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
 				resort(textField.getText(), getCase(textField.getText()));
@@ -126,7 +123,7 @@ public  class SortBox<T extends Object> extends JPanel {
 					return true;
 				if (rdbtnNocase.isSelected())
 					return false;
-				for(char c : text.toCharArray()){
+				for (char c : text.toCharArray()) {
 					if (Character.isUpperCase(c))
 						return true;
 				}
@@ -136,16 +133,17 @@ public  class SortBox<T extends Object> extends JPanel {
 		textField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				((JTextField)arg0.getComponent()).selectAll();
+				((JTextField) arg0.getComponent()).selectAll();
 			}
+
 			@Override
 			public void focusLost(FocusEvent e) {
-				((JTextField)e.getComponent()).select(0, 0);
+				((JTextField) e.getComponent()).select(0, 0);
 			}
 		});
 		panel.add(textField, "3, 2, fill, top");
 		textField.setColumns(10);
-		
+
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "2, 4, fill, top");
 		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
@@ -153,27 +151,23 @@ public  class SortBox<T extends Object> extends JPanel {
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
 				ColumnSpec.decode("61px:grow"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("53px:grow"),},
-			new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("23px"),}));
+				ColumnSpec.decode("53px:grow"), }, new RowSpec[] {
+				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("23px"), }));
 
-		
 		rdbtnCase = new JRadioButton("Case");
 		panel_1.add(rdbtnCase, "1, 2, right, top");
-		
+
 		rdbtnNocase = new JRadioButton("Nocase");
 		panel_1.add(rdbtnNocase, "3, 2, center, top");
-		
+
 		rdbtnSmart = new JRadioButton("Smart");
 		rdbtnSmart.setSelected(true);
 		panel_1.add(rdbtnSmart, "5, 2, left, top");
-		
+
 		ButtonGroup caseGroup = new ButtonGroup();
 		caseGroup.add(rdbtnCase);
 		caseGroup.add(rdbtnNocase);
 		caseGroup.add(rdbtnSmart);
-		
 
 	}
 

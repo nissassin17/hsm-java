@@ -2,16 +2,17 @@ package org.hedspi.posgresql.hedspi_student_manager.model.hedspi;
 
 import javax.swing.DefaultListModel;
 
-public class SortedHedspiObjectsListModel<T extends HedspiObject> extends DefaultListModel<T> implements IObjectsContainer<T>{
+public class SortedHedspiObjectsListModel<T extends HedspiObject> extends
+		DefaultListModel<T> implements IObjectsContainer<T> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private SortedList<T> sortedList;
-	
-	public SortedHedspiObjectsListModel(){
+
+	public SortedHedspiObjectsListModel() {
 		sortedList = new SortedList<>();
 	}
 
@@ -23,7 +24,7 @@ public class SortedHedspiObjectsListModel<T extends HedspiObject> extends Defaul
 
 	private void updateModel() {
 		super.removeAllElements();
-		for(T it : sortedList)
+		for (T it : sortedList)
 			super.addElement(it);
 	}
 
@@ -38,5 +39,5 @@ public class SortedHedspiObjectsListModel<T extends HedspiObject> extends Defaul
 		sortedList.clear();
 		updateModel();
 	}
-	
+
 }

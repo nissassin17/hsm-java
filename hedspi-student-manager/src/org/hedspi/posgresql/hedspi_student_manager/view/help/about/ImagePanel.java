@@ -22,18 +22,18 @@ public class ImagePanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Create the panel.
 	 */
 	public ImagePanel(String fileName) {
 		setSize(new Dimension(300, 300));
-		setLayout(new FormLayout(new ColumnSpec[] {},
-			new RowSpec[] {}));
+		setLayout(new FormLayout(new ColumnSpec[] {}, new RowSpec[] {}));
 		this.fileName = fileName;
 		image = null;
 		addImage();
 	}
-	
+
 	private void addImage() {
 		if (fileName == null)
 			return;
@@ -43,14 +43,15 @@ public class ImagePanel extends JPanel {
 			File input = new File(fileName);
 			image = ImageIO.read(input);
 		} catch (IOException ie) {
-			Control.getInstance().getLogger().log(Level.WARNING, ie.getMessage());
+			Control.getInstance().getLogger()
+					.log(Level.WARNING, ie.getMessage());
 			return;
 		}
 	}
 
 	public void paint(Graphics g) {
 		if (image != null)
-			g.drawImage( image, 0, 0, 100, 100, null);
+			g.drawImage(image, 0, 0, 100, 100, null);
 	}
 
 	private String fileName;

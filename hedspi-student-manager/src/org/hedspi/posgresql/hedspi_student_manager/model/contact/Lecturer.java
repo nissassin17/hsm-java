@@ -6,10 +6,11 @@ import org.hedspi.posgresql.hedspi_student_manager.model.academic.HedspiClass;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 
 public class Lecturer extends HedspiObject {
-	
+
 	public static final String ID_CODE = "LT#";
-	
+
 	private Contact contact;
+
 	public Lecturer(String id, Contact contact) {
 		super(id);
 		this.contact = contact;
@@ -37,7 +38,7 @@ public class Lecturer extends HedspiObject {
 		super(id);
 	}
 
-	public String getName(){
+	public String getName() {
 		return getContact().getName();
 	}
 
@@ -45,6 +46,5 @@ public class Lecturer extends HedspiObject {
 	public String toString() {
 		return getName();
 	}
-	
-	
+
 }

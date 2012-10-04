@@ -16,17 +16,18 @@ public class ClassPanel extends javax.swing.JSplitPane {
 	 * Create the panel.
 	 */
 	public ClassPanel() {
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		setLeftComponent(scrollPane);
-		
+
 		ClassViewPanel panel_1 = new ClassViewPanel();
-		ObjectListPanel<HedspiClass> panel = new ObjectListPanel<HedspiClass>(panel_1, HedspiClass.getClasses());
+		ObjectListPanel<HedspiClass> panel = new ObjectListPanel<HedspiClass>(
+				panel_1, HedspiClass.getClasses());
 		scrollPane.setViewportView(panel);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		setRightComponent(scrollPane_1);
-		
+
 		scrollPane_1.setViewportView(panel_1);
 
 	}

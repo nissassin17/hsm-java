@@ -18,47 +18,48 @@ public class InputField extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private final int LABEL_SIZE = 150;
 	private final int TEXT_LENGTH = 10;
-	
+
 	JLabel label;
 	JTextField text;
-	
-	public InputField(String say, String defaultValue, boolean isPasswordField){
+
+	public InputField(String say, String defaultValue, boolean isPasswordField) {
 		super();
 		FlowLayout fl = new FlowLayout(FlowLayout.LEFT, 5, 5);
 		fl.setAlignOnBaseline(true);
 		super.setLayout(fl);
-		
-		//value
+
+		// value
 		if (isPasswordField)
 			text = new JPasswordField(TEXT_LENGTH);
 		else
 			text = new JTextField(TEXT_LENGTH);
 		text.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				((JTextField) e.getComponent()).select(0, 0);
-				
+
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				((JTextField) e.getComponent()).selectAll();
 			}
 		});
 		setValue(defaultValue);
-		
-		//label
+
+		// label
 		label = new JLabel();
 		label.setLabelFor(text);
 		setLabel(say);
-		label.setPreferredSize(new Dimension(LABEL_SIZE, (int)label.getPreferredSize().height));
-		
-		//add
+		label.setPreferredSize(new Dimension(LABEL_SIZE, (int) label
+				.getPreferredSize().height));
+
+		// add
 		super.add(label);
 		super.add(text);
 	}
-	
+
 	private void setValue(String defaultValue) {
 		text.setText(defaultValue);
 	}
@@ -70,20 +71,20 @@ public class InputField extends JPanel {
 	public InputField(String say) {
 		this(say, "", false);
 	}
-	
-	public InputField(String say, String defaultValue){
+
+	public InputField(String say, String defaultValue) {
 		this(say, defaultValue, false);
 	}
-	
-	public InputField(String say, boolean isPasswordField){
+
+	public InputField(String say, boolean isPasswordField) {
 		this(say, "", isPasswordField);
 	}
-	
-	public String getValue(){
+
+	public String getValue() {
 		return text.getText();
 	}
-	
-	public void setMnemonic(char c){
+
+	public void setMnemonic(char c) {
 		label.setDisplayedMnemonic(c);
 	}
 }

@@ -15,8 +15,8 @@ public abstract class IFrameAskToClose extends JFrame implements IClosable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	public IFrameAskToClose(){
+
+	public IFrameAskToClose() {
 		super();
 		setWindowOperation();
 		setEscapeToClose();
@@ -24,27 +24,25 @@ public abstract class IFrameAskToClose extends JFrame implements IClosable {
 
 	private void setEscapeToClose() {
 		super.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
-				
-				
+
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-					((IClosable)e.getComponent()).close();
-				
+					((IClosable) e.getComponent()).close();
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
-				
+
 			}
 		});
-		
+
 	}
 
 	private void setWindowOperation() {
@@ -53,34 +51,33 @@ public abstract class IFrameAskToClose extends JFrame implements IClosable {
 			@Override
 			public void windowOpened(WindowEvent e) {
 			}
-			
+
 			@Override
 			public void windowIconified(WindowEvent e) {
 			}
-			
+
 			@Override
 			public void windowDeiconified(WindowEvent e) {
 			}
-			
+
 			@Override
 			public void windowDeactivated(WindowEvent e) {
 			}
-			
+
 			@Override
 			public void windowClosing(WindowEvent e) {
-				((IClosable)e.getComponent()).close();
+				((IClosable) e.getComponent()).close();
 			}
-			
+
 			@Override
 			public void windowClosed(WindowEvent e) {
 				Control.getInstance().fire("exit");
 			}
-			
+
 			@Override
 			public void windowActivated(WindowEvent e) {
 			}
 		});
 	}
-
 
 }

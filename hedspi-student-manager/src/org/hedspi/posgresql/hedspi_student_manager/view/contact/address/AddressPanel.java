@@ -12,25 +12,26 @@ public class AddressPanel extends JSplitPane {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private CityPanel panel;
 
 	/**
 	 * Create the panel.
 	 */
 	public AddressPanel() {
-		
+
 		panel = new CityPanel();
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		setLeftComponent(scrollPane);
-		
-		ObjectListPanel<City> panel_1 = new ObjectListPanel<City>(panel, City.getCities());
+
+		ObjectListPanel<City> panel_1 = new ObjectListPanel<City>(panel,
+				City.getCities());
 		scrollPane.setViewportView(panel_1);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		setRightComponent(scrollPane_1);
-		
+
 		scrollPane_1.setViewportView(panel);
 
 	}

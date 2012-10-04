@@ -17,17 +17,17 @@ public class UserPanel extends JSplitPane {
 	 */
 	public UserPanel(String imageUrl, String info) {
 		setSize(new Dimension(380, 250));
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		setLeftComponent(scrollPane);
-		
+
 		JTextArea textArea = new JTextArea(info);
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		setRightComponent(scrollPane_1);
-		
+
 		ImagePanel panel = new ImagePanel(imageUrl);
 		scrollPane_1.setViewportView(panel);
 

@@ -20,7 +20,7 @@ public class DistrictListEditor extends ListEditor<District> {
 
 	@Override
 	public District getNewElement(String val) {
-		//TODO: not implemented
+		// TODO: not implemented
 		return new District(val);
 	}
 

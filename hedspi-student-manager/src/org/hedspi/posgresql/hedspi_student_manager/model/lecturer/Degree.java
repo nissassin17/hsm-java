@@ -7,10 +7,10 @@ public class Degree extends HedspiObject {
 	public Degree(String id) {
 		super(id);
 	}
-	
+
 	public static final String ID_CODE = "DG#";
 	public static final String NAME_CODE = "Name";
-	
+
 	private String name;
 
 	public String getName() {

@@ -6,21 +6,22 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class OANumberSpinner<T> extends OAComponentAbstract<String, T> {
-	
+
 	JSpinner spinner;
+
 	public JSpinner getSpinner() {
 		return spinner;
 	}
 
 	SpinnerNumberModel model;
-	
+
 	private OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object,
 			SpinnerNumberModel model) {
 		super(objectUpdater, object);
 		this.model = model;
 		spinner = new JSpinner(model);
 		model.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				updateObjectValue();
@@ -28,18 +29,22 @@ public class OANumberSpinner<T> extends OAComponentAbstract<String, T> {
 		});
 	}
 
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, int defaultValue, int minValue, int maxValue, int step) {
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater,
+			int defaultValue, int minValue, int maxValue, int step) {
 		this(objectUpdater, null, defaultValue, minValue, maxValue, step);
 	}
 
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object, int defaultValue, int minValue, int maxValue, int step) {
-		this(objectUpdater, object, new SpinnerNumberModel(defaultValue, minValue, maxValue, step));
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object,
+			int defaultValue, int minValue, int maxValue, int step) {
+		this(objectUpdater, object, new SpinnerNumberModel(defaultValue,
+				minValue, maxValue, step));
 	}
-	
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object){
+
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object) {
 		this(objectUpdater, object, new SpinnerNumberModel());
 	}
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater){
+
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater) {
 		this(objectUpdater, null);
 	}
 
@@ -50,11 +55,11 @@ public class OANumberSpinner<T> extends OAComponentAbstract<String, T> {
 
 	@Override
 	public void setValue(String value) {
-		try{
+		try {
 			int val = Integer.parseInt(value);
 			model.setValue(val);
-		}catch(Exception e){
-			
+		} catch (Exception e) {
+
 		}
 	}
 }

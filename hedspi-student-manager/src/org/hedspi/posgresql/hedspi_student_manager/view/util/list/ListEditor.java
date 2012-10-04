@@ -32,7 +32,7 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 	private JTextField textField;
 	private JList<T> list;
 	private HedspiObjects<T> hedspiObject;
-	
+
 	public HedspiObjects<T> getHedspiObject() {
 		return hedspiObject;
 	}
@@ -43,8 +43,8 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 	}
 
 	public abstract T getNewElement(String val);
-	
-	public ListEditor(){
+
+	public ListEditor() {
 		this(new HedspiObjects<T>());
 	}
 
@@ -54,8 +54,10 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 	public ListEditor(HedspiObjects<T> hedspiObjectArg) {
 		super();
 		this.hedspiObject = hedspiObjectArg;
-		
-		setLayout(new MigLayout("", "[82.00px:211.00px:100.00%,grow][49.00:52.00:423.00]", "[:24.00px:33.00px][241.00,grow]"));
+
+		setLayout(new MigLayout("",
+				"[82.00px:211.00px:100.00%,grow][49.00:52.00:423.00]",
+				"[:24.00px:33.00px][241.00,grow]"));
 
 		textField = new JTextField();
 		textField.addFocusListener(new FocusAdapter() {
@@ -76,7 +78,7 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 
 		JButton btnAdd = new JButton("+");
 		btnAdd.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String val = textField.getText();
@@ -113,7 +115,7 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<T> arr = (ArrayList<T>) list.getSelectedValuesList();
-				for(T it : arr)
+				for (T it : arr)
 					hedspiObject.removeObject(it);
 			}
 		});

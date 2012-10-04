@@ -15,89 +15,100 @@ import org.hedspi.posgresql.hedspi_student_manager.control.Control;
 
 public class CoreService {
 	private static CoreService instance;
-	public static CoreService getInstance(){
-		if (instance == null){
+
+	public static CoreService getInstance() {
+		if (instance == null) {
 			instance = new CoreService();
 			try {
 				Class.forName("org.postgresql.Driver");
 			} catch (ClassNotFoundException e) {
-				Control.getInstance().getLogger().log(Level.SEVERE, "Init postgresql driver failed.\nMessage: " + e.getMessage());
+				Control.getInstance()
+						.getLogger()
+						.log(Level.SEVERE,
+								"Init postgresql driver failed.\nMessage: "
+										+ e.getMessage());
 				return null;
 			}
 		}
 		return instance;
 	}
-	
+
 	private Properties loginInfo;
-	
+
 	public void setLoginInfo(Properties loginInfo) {
 		this.loginInfo = loginInfo;
 	}
 
-	public static boolean isGoodLogin(Properties loginInfo){
-			String url = getUrl(loginInfo);
-			try {
-				Connection con = DriverManager.getConnection(url);
-				con.close();
-			} catch (SQLException e) {
-				Control.getInstance().getLogger().log(Level.WARNING, "Login failed: {0}", e.getMessage());
-				return false;
-			}
-			return true;
+	public static boolean isGoodLogin(Properties loginInfo) {
+		String url = getUrl(loginInfo);
+		try {
+			Connection con = DriverManager.getConnection(url);
+			con.close();
+		} catch (SQLException e) {
+			Control.getInstance().getLogger()
+					.log(Level.WARNING, "Login failed: {0}", e.getMessage());
+			return false;
+		}
+		return true;
 	}
 
 	private static String getUrl(Properties loginInfo) {
-		String url = "jdbc:postgresql://"+ loginInfo.getProperty("host", "localhost") +
-				":" + loginInfo.getProperty("port", "5432") +
-				"/" + loginInfo.getProperty("dbname", "hedspi") +
-				"?user="+ loginInfo.getProperty("username", "Admin") +
-				"&password="+loginInfo.getProperty("password", "hedspi");
-//				+ "&ssl=" + loginInfo.getProperty("ssl", "false");
-//		Control.getInstance().getLogger().log(Level.INFO, url);
+		String url = "jdbc:postgresql://"
+				+ loginInfo.getProperty("host", "localhost") + ":"
+				+ loginInfo.getProperty("port", "5432") + "/"
+				+ loginInfo.getProperty("dbname", "hedspi") + "?user="
+				+ loginInfo.getProperty("username", "Admin") + "&password="
+				+ loginInfo.getProperty("password", "hedspi");
+		// + "&ssl=" + loginInfo.getProperty("ssl", "false");
+		// Control.getInstance().getLogger().log(Level.INFO, url);
 		return url;
 	}
-	
-	private String getUrl(){
+
+	private String getUrl() {
 		return getUrl(loginInfo);
 	}
-	
-	private Connection getConnection(){
+
+	private Connection getConnection() {
 		Connection conn = null;
-		try{
+		try {
 			conn = DriverManager.getConnection(getUrl());
-			
-		} catch (Throwable e){
+
+		} catch (Throwable e) {
 			Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
 			return null;
 		}
-		if (conn == null){
-			Control.getInstance().getLogger().log(Level.SEVERE, "Failed to connect to database");
+		if (conn == null) {
+			Control.getInstance().getLogger()
+					.log(Level.SEVERE, "Failed to connect to database");
 			return null;
 		}
-		
-		try{
-			for(SQLWarning warn = conn.getWarnings(); warn != null; warn = warn.getNextWarning()){
-				Control.getInstance().getLogger().log(Level.WARNING, warn.getMessage());
+
+		try {
+			for (SQLWarning warn = conn.getWarnings(); warn != null; warn = warn
+					.getNextWarning()) {
+				Control.getInstance().getLogger()
+						.log(Level.WARNING, warn.getMessage());
 			}
-		} catch (Exception e){
+		} catch (Exception e) {
 			Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
 		}
 		return conn;
 	}
-	
-	public ArrayList<HashMap<String,Object>> query(String queryStr){
-		Control.getInstance().getLogger().log(Level.INFO, "Execute query {0}", queryStr);
-		
+
+	public ArrayList<HashMap<String, Object>> query(String queryStr) {
+		Control.getInstance().getLogger()
+				.log(Level.INFO, "Execute query {0}", queryStr);
+
 		Connection conn = getConnection();
 		if (conn == null)
 			return null;
-		
+
 		Statement stmt = getStatement(conn);
-		if (stmt == null){
+		if (stmt == null) {
 			closeConnection(conn);
 			return null;
 		}
-		
+
 		ResultSet rs = null;
 		try {
 			rs = stmt.executeQuery(queryStr);
@@ -107,18 +118,18 @@ public class CoreService {
 			closeConnection(conn);
 			return null;
 		}
-		if (rs == null){
+		if (rs == null) {
 			closeStatement(stmt);
 			closeConnection(conn);
 			return null;
 		}
-		
+
 		ArrayList<HashMap<String, Object>> result = new ArrayList<>();
 		try {
 			int n = rs.getMetaData().getColumnCount();
-			while (rs.next()){
+			while (rs.next()) {
 				HashMap<String, Object> map = new HashMap<>();
-				for(int i = 1; i <= n; i++){
+				for (int i = 1; i <= n; i++) {
 					String label = rs.getMetaData().getColumnLabel(i);
 					Object val = rs.getObject(i);
 					map.put(label, val);
@@ -127,7 +138,7 @@ public class CoreService {
 			}
 		} catch (SQLException e) {
 			Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
-		} finally{
+		} finally {
 			closeResultSet(rs);
 			closeStatement(stmt);
 			closeConnection(conn);
@@ -138,19 +149,21 @@ public class CoreService {
 
 	private void closeResultSet(ResultSet rs) {
 		if (rs != null)
-			try{
+			try {
 				rs.close();
-			} catch (SQLException e){
-				Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
+			} catch (SQLException e) {
+				Control.getInstance().getLogger()
+						.log(Level.SEVERE, e.getMessage());
 			}
 	}
 
 	private void closeStatement(Statement stmt) {
-		if (stmt != null){
-			try{
+		if (stmt != null) {
+			try {
 				stmt.close();
-			} catch (SQLException e){
-				Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
+			} catch (SQLException e) {
+				Control.getInstance().getLogger()
+						.log(Level.SEVERE, e.getMessage());
 			}
 		}
 	}
@@ -163,8 +176,9 @@ public class CoreService {
 			Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
 			return null;
 		}
-		if (stmt == null){
-			Control.getInstance().getLogger().log(Level.SEVERE, "Cannot create query");
+		if (stmt == null) {
+			Control.getInstance().getLogger()
+					.log(Level.SEVERE, "Cannot create query");
 			return null;
 		}
 		return stmt;
@@ -172,10 +186,11 @@ public class CoreService {
 
 	private void closeConnection(Connection conn) {
 		if (conn != null)
-			try{
+			try {
 				conn.close();
-			} catch (Throwable e){
-				Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
+			} catch (Throwable e) {
+				Control.getInstance().getLogger()
+						.log(Level.SEVERE, e.getMessage());
 			}
 	}
 }
