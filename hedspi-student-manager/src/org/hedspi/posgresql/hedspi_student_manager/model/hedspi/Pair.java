@@ -14,12 +14,12 @@ public class Pair<T0, T1> {
 		return object0;
 	}
 
-	public void setObject0(T0 object0) {
-		this.object0 = object0;
-	}
-
 	public T1 getObject1() {
 		return object1;
+	}
+
+	public void setObject0(T0 object0) {
+		this.object0 = object0;
 	}
 
 	public void setObject1(T1 object1) {

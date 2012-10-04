@@ -10,12 +10,12 @@ public class DistrictListEditor extends ListEditor<District> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DistrictListEditor(HedspiObjects<District> hedspiObjectArg) {
-		super(hedspiObjectArg);
-	}
-
 	public DistrictListEditor() {
 		super();
+	}
+
+	public DistrictListEditor(HedspiObjects<District> hedspiObjectArg) {
+		super(hedspiObjectArg);
 	}
 
 	@Override

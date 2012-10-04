@@ -27,7 +27,7 @@ public class CancelButton extends JButton {
 	}
 
 	public IClosable getFrameWithClose() {
-		return (IClosable) frame;
+		return frame;
 	}
 
 }

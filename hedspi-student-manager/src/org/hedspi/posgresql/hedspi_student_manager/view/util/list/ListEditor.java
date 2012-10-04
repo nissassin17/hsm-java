@@ -1,6 +1,11 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.util.list;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -14,14 +19,9 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public abstract class ListEditor<T extends HedspiObject> extends JPanel {
@@ -32,17 +32,6 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 	private JTextField textField;
 	private JList<T> list;
 	private HedspiObjects<T> hedspiObject;
-
-	public HedspiObjects<T> getHedspiObject() {
-		return hedspiObject;
-	}
-
-	public void setHedspiObject(HedspiObjects<T> hedspiObject) {
-		this.hedspiObject = hedspiObject;
-		list.setModel(hedspiObject.getListModel());
-	}
-
-	public abstract T getNewElement(String val);
 
 	public ListEditor() {
 		this(new HedspiObjects<T>());
@@ -104,6 +93,7 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 
 		JButton button = new JButton("{}");
 		button.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				list.setSelectionInterval(0, list.getModel().getSize() - 1);
 			}
@@ -113,6 +103,7 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 		JButton btnRemove = new JButton("-");
 		panel.add(btnRemove, "1, 4, fill, top");
 		btnRemove.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<T> arr = (ArrayList<T>) list.getSelectedValuesList();
 				for (T it : arr)
@@ -122,5 +113,16 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] {
 				textField, btnAdd, btnRemove, scrollPane }));
 
+	}
+
+	public HedspiObjects<T> getHedspiObject() {
+		return hedspiObject;
+	}
+
+	public abstract T getNewElement(String val);
+
+	public void setHedspiObject(HedspiObjects<T> hedspiObject) {
+		this.hedspiObject = hedspiObject;
+		list.setModel(hedspiObject.getListModel());
 	}
 }

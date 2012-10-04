@@ -1,18 +1,17 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.student;
 
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 
 import org.hedspi.posgresql.hedspi_student_manager.model.contact.Student;
 import org.hedspi.posgresql.hedspi_student_manager.view.contact.ContactPane;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectViewPanel;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.JButton;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 public class StudentViewPane extends JPanel implements
 		IObjectViewPanel<Student> {

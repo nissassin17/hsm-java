@@ -10,8 +10,8 @@ public class OADateSpinner<T> extends OAComponentAbstract<Date, T> {
 	JSpinner spinner;
 	SpinnerDateModel model;
 
-	public JSpinner getSpinner() {
-		return spinner;
+	public OADateSpinner(IObjectUpdater<T, Date> objectUpdater) {
+		this(objectUpdater, null);
 	}
 
 	public OADateSpinner(IObjectUpdater<T, Date> objectUpdater, T object) {
@@ -20,8 +20,8 @@ public class OADateSpinner<T> extends OAComponentAbstract<Date, T> {
 		spinner = new JSpinner(model);
 	}
 
-	public OADateSpinner(IObjectUpdater<T, Date> objectUpdater) {
-		this(objectUpdater, null);
+	public JSpinner getSpinner() {
+		return spinner;
 	}
 
 	@Override

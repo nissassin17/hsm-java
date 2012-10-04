@@ -17,18 +17,6 @@ public class SortedHedspiObjectsListModel<T extends HedspiObject> extends
 	}
 
 	@Override
-	public void removeObject(T obj) {
-		sortedList.remove(obj);
-		updateModel();
-	}
-
-	private void updateModel() {
-		super.removeAllElements();
-		for (T it : sortedList)
-			super.addElement(it);
-	}
-
-	@Override
 	public void addObject(T obj) {
 		sortedList.add(obj);
 		updateModel();
@@ -38,6 +26,18 @@ public class SortedHedspiObjectsListModel<T extends HedspiObject> extends
 	public void removeAll() {
 		sortedList.clear();
 		updateModel();
+	}
+
+	@Override
+	public void removeObject(T obj) {
+		sortedList.remove(obj);
+		updateModel();
+	}
+
+	private void updateModel() {
+		super.removeAllElements();
+		for (T it : sortedList)
+			super.addElement(it);
 	}
 
 }

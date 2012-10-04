@@ -11,16 +11,14 @@ public class Lecturer extends HedspiObject {
 
 	private Contact contact;
 
+	private ArrayList<HedspiClass> classes;
+
+	public Lecturer(String id) {
+		super(id);
+	}
+
 	public Lecturer(String id, Contact contact) {
 		super(id);
-		this.contact = contact;
-	}
-
-	public Contact getContact() {
-		return contact;
-	}
-
-	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
 
@@ -28,18 +26,20 @@ public class Lecturer extends HedspiObject {
 		return classes;
 	}
 
-	public void setClasses(ArrayList<HedspiClass> classes) {
-		this.classes = classes;
-	}
-
-	private ArrayList<HedspiClass> classes;
-
-	public Lecturer(String id) {
-		super(id);
+	public Contact getContact() {
+		return contact;
 	}
 
 	public String getName() {
 		return getContact().getName();
+	}
+
+	public void setClasses(ArrayList<HedspiClass> classes) {
+		this.classes = classes;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 
 	@Override

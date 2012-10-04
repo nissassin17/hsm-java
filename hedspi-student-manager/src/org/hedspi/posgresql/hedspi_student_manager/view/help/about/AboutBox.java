@@ -1,16 +1,18 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.help.about;
 
+import java.awt.Dimension;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 import javax.swing.JPanel;
-import java.awt.Dimension;
+import javax.swing.WindowConstants;
+
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class AboutBox extends JDialog {
 
@@ -26,7 +28,7 @@ public class AboutBox extends JDialog {
 		super(parent);
 		setVisible(true);
 		setSize(new Dimension(780, 212));
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setModal(true);
 		setTitle("About");
 		getContentPane().setLayout(

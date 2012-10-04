@@ -1,6 +1,10 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.classview;
 
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import org.hedspi.posgresql.hedspi_student_manager.model.academic.HedspiClass;
 import org.hedspi.posgresql.hedspi_student_manager.model.contact.Student;
@@ -8,16 +12,11 @@ import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectViewPan
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.IObjectUpdater;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OATextField;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-import javax.swing.JLabel;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
-
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class ClassViewPanel extends JPanel implements
 		IObjectViewPanel<HedspiClass> {
@@ -57,13 +56,13 @@ public class ClassViewPanel extends JPanel implements
 				new IObjectUpdater<HedspiClass, String>() {
 
 					@Override
-					public void setValue(HedspiClass object, String value) {
-						object.setName(value);
+					public String getValue(HedspiClass object) {
+						return object.getName();
 					}
 
 					@Override
-					public String getValue(HedspiClass object) {
-						return object.getName();
+					public void setValue(HedspiClass object, String value) {
+						object.setName(value);
 					}
 				});
 		textFieldClassName = oaClassName.getTextField();
@@ -82,17 +81,17 @@ public class ClassViewPanel extends JPanel implements
 
 	}
 
-	@Override
-	public void setObject(HedspiClass obj) {
-		getTextFieldClassName().setText(obj.getName());
-		listClass.setModel(obj.getStudents().getListModel());
-	}
-
 	protected JList<Student> getListClass() {
 		return listClass;
 	}
 
 	protected JTextField getTextFieldClassName() {
 		return textFieldClassName;
+	}
+
+	@Override
+	public void setObject(HedspiClass obj) {
+		getTextFieldClassName().setText(obj.getName());
+		listClass.setModel(obj.getStudents().getListModel());
 	}
 }

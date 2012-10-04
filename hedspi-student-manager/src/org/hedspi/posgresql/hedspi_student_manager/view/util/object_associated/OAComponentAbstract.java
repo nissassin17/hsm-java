@@ -23,11 +23,11 @@ public abstract class OAComponentAbstract<T1, T2> {
 		this.object = object;
 	}
 
-	public abstract T1 getValue();
-
 	public T2 getObject() {
 		return object;
 	}
+
+	public abstract T1 getValue();
 
 	public void setObject(T2 object) {
 		this.object = object;

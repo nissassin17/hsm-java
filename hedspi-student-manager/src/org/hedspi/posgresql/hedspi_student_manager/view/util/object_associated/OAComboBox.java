@@ -10,10 +10,6 @@ public class OAComboBox<T1 extends Object, T2 extends Object> extends
 
 	JComboBox<T1> comboBox;
 
-	public JComboBox<T1> getComboBox() {
-		return comboBox;
-	}
-
 	public OAComboBox(IObjectUpdater<T2, T1> comboBoxUpdaterArg) {
 		this(comboBoxUpdaterArg, null);
 	}
@@ -28,6 +24,10 @@ public class OAComboBox<T1 extends Object, T2 extends Object> extends
 				updateObjectValue();
 			}
 		});
+	}
+
+	public JComboBox<T1> getComboBox() {
+		return comboBox;
 	}
 
 	@Override

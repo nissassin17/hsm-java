@@ -60,13 +60,13 @@ public class StudentOtherInfoPanel extends JPanel {
 				new IObjectUpdater<Student, String>() {
 
 					@Override
-					public void setValue(Student object, String value) {
-						object.setMssv(value);
+					public String getValue(Student object) {
+						return object.getMssv();
 					}
 
 					@Override
-					public String getValue(Student object) {
-						return object.getMssv();
+					public void setValue(Student object, String value) {
+						object.setMssv(value);
 					}
 				});
 		textFieldID = oaTextFieldID.getTextField();
@@ -82,15 +82,15 @@ public class StudentOtherInfoPanel extends JPanel {
 				new IObjectUpdater<Student, HedspiClass>() {
 
 					@Override
-					public void setValue(Student object, HedspiClass value) {
-						object.setMyClass(value);
-
-					}
-
-					@Override
 					public HedspiClass getValue(Student object) {
 
 						return object.getMyClass();
+					}
+
+					@Override
+					public void setValue(Student object, HedspiClass value) {
+						object.setMyClass(value);
+
 					}
 				});
 		comboBoxClass = oaComboBox.getComboBox();
@@ -106,6 +106,11 @@ public class StudentOtherInfoPanel extends JPanel {
 				new IObjectUpdater<Student, String>() {
 
 					@Override
+					public String getValue(Student object) {
+						return String.valueOf(object.getEnrollPoint());
+					}
+
+					@Override
 					public void setValue(Student object, String value) {
 						double val;
 						try {
@@ -113,11 +118,6 @@ public class StudentOtherInfoPanel extends JPanel {
 							object.setEnrollPoint(val);
 						} catch (Exception e) {
 						}
-					}
-
-					@Override
-					public String getValue(Student object) {
-						return String.valueOf(object.getEnrollPoint());
 					}
 				});
 		textFieldEnrollPoint = oaEnrollPoint.getTextField();
@@ -132,6 +132,11 @@ public class StudentOtherInfoPanel extends JPanel {
 				new IObjectUpdater<Student, String>() {
 
 					@Override
+					public String getValue(Student object) {
+						return String.valueOf(object.getEnrollYear());
+					}
+
+					@Override
 					public void setValue(Student object, String value) {
 						try {
 							int year = Integer.parseInt(value);
@@ -139,11 +144,6 @@ public class StudentOtherInfoPanel extends JPanel {
 						} catch (Exception e) {
 
 						}
-					}
-
-					@Override
-					public String getValue(Student object) {
-						return String.valueOf(object.getEnrollYear());
 					}
 				}, 2000, 0, 3000, 1);
 		spinnerEnrollYear = oaEnrollYear.getSpinner();

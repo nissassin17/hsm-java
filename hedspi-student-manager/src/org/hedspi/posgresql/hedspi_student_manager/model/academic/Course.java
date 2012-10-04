@@ -13,63 +13,63 @@ public class Course extends HedspiObject {
 	public static final String NFEE_CODE = "nFees";
 	public static final String TIME_CODE = "Times";
 
+	private String topic;
+
+	private String name;
+
+	private int nCredits;
+
+	private double nFees;
+
+	private double times;
+
+	private ArrayList<Course> background;
+
 	public Course(String id) {
 		super(id);
 	}
 
+	public ArrayList<Course> getBackground() {
+		return background;
+	}
+	public String getName() {
+		return name;
+	}
+	public int getnCredits() {
+		return nCredits;
+	}
+	public double getnFees() {
+		return nFees;
+	}
+	public double getTimes() {
+		return times;
+	}
 	public String getTopic() {
 		return topic;
 	}
 
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-
-	public String getName() {
-		return name;
+	public void setBackground(ArrayList<Course> background) {
+		this.background = background;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getnCredits() {
-		return nCredits;
-	}
-
 	public void setnCredits(int nCredits) {
 		this.nCredits = nCredits;
-	}
-
-	private String topic;
-	private String name;
-	private int nCredits;
-	private double nFees;
-	private double times;
-	private ArrayList<Course> background;
-
-	public double getTimes() {
-		return times;
-	}
-
-	public void setTimes(double times) {
-		this.times = times;
-	}
-
-	public double getnFees() {
-		return nFees;
 	}
 
 	public void setnFees(double nFees) {
 		this.nFees = nFees;
 	}
 
-	public ArrayList<Course> getBackground() {
-		return background;
+	public void setTimes(double times) {
+		this.times = times;
 	}
 
-	public void setBackground(ArrayList<Course> background) {
-		this.background = background;
+	public void setTopic(String topic) {
+		this.topic = topic;
 	}
 
 }

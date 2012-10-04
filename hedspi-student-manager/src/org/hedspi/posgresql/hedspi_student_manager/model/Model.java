@@ -21,21 +21,13 @@ public class Model implements IModel {
 
 	private static Model instance;
 
-	private Model() {
+	public static Model getInstance() {
+		if (instance == null)
+			instance = new Model();
+		return instance;
 	}
 
-	@Override
-	public void setData(String command, Object... data) {
-		switch (command) {
-		case "cloneDatabase":
-			cloneDatabase();
-			break;
-		default:
-			Control.getInstance()
-					.getLogger()
-					.log(Level.WARNING,
-							"Unsupported setData operation  - " + command);
-		}
+	private Model() {
 	}
 
 	private void cloneDatabase() {
@@ -65,10 +57,18 @@ public class Model implements IModel {
 		}
 	}
 
-	public static Model getInstance() {
-		if (instance == null)
-			instance = new Model();
-		return instance;
+	@Override
+	public void setData(String command, Object... data) {
+		switch (command) {
+		case "cloneDatabase":
+			cloneDatabase();
+			break;
+		default:
+			Control.getInstance()
+					.getLogger()
+					.log(Level.WARNING,
+							"Unsupported setData operation  - " + command);
+		}
 	}
 
 }

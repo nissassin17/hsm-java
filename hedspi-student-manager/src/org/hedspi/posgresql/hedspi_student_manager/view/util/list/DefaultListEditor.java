@@ -10,12 +10,12 @@ public class DefaultListEditor extends ListEditor<HedspiObject> {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DefaultListEditor(HedspiObjects<HedspiObject> hedspiObjectArg) {
-		super(hedspiObjectArg);
-	}
-
 	public DefaultListEditor() {
 		super();
+	}
+
+	public DefaultListEditor(HedspiObjects<HedspiObject> hedspiObjectArg) {
+		super(hedspiObjectArg);
 	}
 
 	@Override

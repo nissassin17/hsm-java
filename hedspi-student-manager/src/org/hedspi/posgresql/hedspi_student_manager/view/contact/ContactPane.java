@@ -5,13 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.SpinnerDateModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -30,10 +34,6 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
-import java.util.Date;
-import java.util.Calendar;
 
 public class ContactPane extends JPanel {
 	/**
@@ -47,47 +47,24 @@ public class ContactPane extends JPanel {
 	private DefaultListEditor listPhone;
 	private JSpinner spinnerDob;
 
-	public DefaultListEditor getListPhone() {
-		return listPhone;
-	}
-
-	public void setListPhone(DefaultListEditor listPhone) {
-		this.listPhone = listPhone;
-	}
-
-	public DefaultListEditor getListEmail() {
-		return listEmail;
-	}
-
-	public void setListEmail(DefaultListEditor listEmail) {
-		this.listEmail = listEmail;
-	}
-
-	public DefaultListEditor getListImage() {
-		return listImage;
-	}
-
-	public void setListImage(DefaultListEditor listImage) {
-		this.listImage = listImage;
-	}
-
 	private DefaultListEditor listEmail;
+
 	private DefaultListEditor listImage;
+
 	private JEditorPane editorPanelNote;
+
 	private JComboBox<City> comboBoxCity;
+
 	private JComboBox<District> comboBoxDistrict;
+
 	private JToggleButton toggleButtonSex;
+
 	private OATextField<Contact> oaHome;
 	private OATextField<Contact> oaLast;
 	private OATextField<Contact> oaFirst;
 	private OAEditorPane<Contact> oaNote;
 	private OAComboBox<District, Contact> oaDistrict;
-
-	private void setCity(City currentCity) {
-		getComboBox_1().setSelectedItem(currentCity);
-		getComboBox().setModel(currentCity.getDistricts().getComboBoxModel());
-	}
-
+	private Contact contact;
 	/**
 	 * Create the panel.
 	 */
@@ -117,13 +94,13 @@ public class ContactPane extends JPanel {
 		oaDistrict = new OAComboBox<>(new IObjectUpdater<Contact, District>() {
 
 			@Override
-			public void setValue(Contact object, District value) {
-				object.setDistrict(value);
+			public District getValue(Contact object) {
+				return object.getDistrict();
 			}
 
 			@Override
-			public District getValue(Contact object) {
-				return object.getDistrict();
+			public void setValue(Contact object, District value) {
+				object.setDistrict(value);
 			}
 		});
 		comboBoxDistrict = oaDistrict.getComboBox();
@@ -131,6 +108,7 @@ public class ContactPane extends JPanel {
 
 		toggleButtonSex = new JToggleButton("Male");
 		toggleButtonSex.addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				JToggleButton btn = (JToggleButton) arg0.getSource();
 				if (btn.isSelected())
@@ -144,13 +122,13 @@ public class ContactPane extends JPanel {
 				new IObjectUpdater<Contact, String>() {
 
 					@Override
-					public void setValue(Contact object, String value) {
-						object.setHome(value);
+					public String getValue(Contact object) {
+						return object.getHome();
 					}
 
 					@Override
-					public String getValue(Contact object) {
-						return object.getHome();
+					public void setValue(Contact object, String value) {
+						object.setHome(value);
 					}
 				});
 		textFieldHome = oaHome.getTextField();
@@ -159,13 +137,13 @@ public class ContactPane extends JPanel {
 		oaLast = new OATextField<>(new IObjectUpdater<Contact, String>() {
 
 			@Override
-			public void setValue(Contact object, String value) {
-				object.setLastName(value);
+			public String getValue(Contact object) {
+				return object.getLastName();
 			}
 
 			@Override
-			public String getValue(Contact object) {
-				return object.getLastName();
+			public void setValue(Contact object, String value) {
+				object.setLastName(value);
 			}
 
 		});
@@ -176,13 +154,13 @@ public class ContactPane extends JPanel {
 				new IObjectUpdater<Contact, String>() {
 
 					@Override
-					public void setValue(Contact object, String value) {
-						object.setFirstName(value);
+					public String getValue(Contact object) {
+						return object.getFirstName();
 					}
 
 					@Override
-					public String getValue(Contact object) {
-						return object.getFirstName();
+					public void setValue(Contact object, String value) {
+						object.setFirstName(value);
 					}
 
 				});
@@ -193,6 +171,7 @@ public class ContactPane extends JPanel {
 		// district's job.
 		comboBoxCity = new JComboBox<>(City.getCities().getComboBoxModel());
 		comboBoxCity.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JComboBox<City> cities = (JComboBox<City>) arg0.getSource();
 				City currentCity = cities.getItemAt(cities.getSelectedIndex());
@@ -268,13 +247,13 @@ public class ContactPane extends JPanel {
 				new IObjectUpdater<Contact, String>() {
 
 					@Override
-					public void setValue(Contact object, String value) {
-						object.setNote(value);
+					public String getValue(Contact object) {
+						return object.getNote();
 					}
 
 					@Override
-					public String getValue(Contact object) {
-						return object.getNote();
+					public void setValue(Contact object, String value) {
+						object.setNote(value);
 					}
 				});
 		editorPanelNote = new JEditorPane();
@@ -282,11 +261,34 @@ public class ContactPane extends JPanel {
 		add(editorPanelNote, "4, 23, fill, fill");
 
 	}
-
-	private Contact contact;
-
+	protected JComboBox<District> getComboBox() {
+		return comboBoxDistrict;
+	}
+	protected JComboBox<City> getComboBox_1() {
+		return comboBoxCity;
+	}
 	public Contact getContact() {
 		return contact;
+	}
+	public DefaultListEditor getListEmail() {
+		return listEmail;
+	}
+
+	public DefaultListEditor getListImage() {
+		return listImage;
+	}
+
+	public DefaultListEditor getListPhone() {
+		return listPhone;
+	}
+
+	protected JToggleButton getToggleButtonSex() {
+		return toggleButtonSex;
+	}
+
+	private void setCity(City currentCity) {
+		getComboBox_1().setSelectedItem(currentCity);
+		getComboBox().setModel(currentCity.getDistricts().getComboBoxModel());
 	}
 
 	public void setContact(Contact contact) {
@@ -308,15 +310,15 @@ public class ContactPane extends JPanel {
 		getToggleButtonSex().setSelected(!contact.isMan());
 	}
 
-	protected JComboBox<City> getComboBox_1() {
-		return comboBoxCity;
+	public void setListEmail(DefaultListEditor listEmail) {
+		this.listEmail = listEmail;
 	}
 
-	protected JComboBox<District> getComboBox() {
-		return comboBoxDistrict;
+	public void setListImage(DefaultListEditor listImage) {
+		this.listImage = listImage;
 	}
 
-	protected JToggleButton getToggleButtonSex() {
-		return toggleButtonSex;
+	public void setListPhone(DefaultListEditor listPhone) {
+		this.listPhone = listPhone;
 	}
 }

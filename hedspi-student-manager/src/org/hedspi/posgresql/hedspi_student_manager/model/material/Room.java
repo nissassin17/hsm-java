@@ -7,11 +7,11 @@ public class Room extends HedspiObject {
 	public static final String ID_CODE = "RM#";
 	public static final String NAME_CODE = "Name";
 
+	private String name;
+
 	public Room(String id) {
 		super(id);
 	}
-
-	private String name;
 
 	public Room(String id, String name) {
 		super(id);

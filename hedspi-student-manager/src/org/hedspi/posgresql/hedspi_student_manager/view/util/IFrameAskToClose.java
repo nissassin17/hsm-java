@@ -26,7 +26,7 @@ public abstract class IFrameAskToClose extends JFrame implements IClosable {
 		super.addKeyListener(new KeyListener() {
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyPressed(KeyEvent e) {
 
 			}
 
@@ -38,7 +38,7 @@ public abstract class IFrameAskToClose extends JFrame implements IClosable {
 			}
 
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyTyped(KeyEvent e) {
 
 			}
 		});
@@ -49,24 +49,7 @@ public abstract class IFrameAskToClose extends JFrame implements IClosable {
 		super.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		super.addWindowListener(new WindowListener() {
 			@Override
-			public void windowOpened(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-				((IClosable) e.getComponent()).close();
+			public void windowActivated(WindowEvent e) {
 			}
 
 			@Override
@@ -75,7 +58,24 @@ public abstract class IFrameAskToClose extends JFrame implements IClosable {
 			}
 
 			@Override
-			public void windowActivated(WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
+				((IClosable) e.getComponent()).close();
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowOpened(WindowEvent e) {
 			}
 		});
 	}

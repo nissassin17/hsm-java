@@ -7,11 +7,11 @@ public class Faculty extends HedspiObject {
 	public static final String ID_CODE = "FC#";
 	public static final String NAME_CODE = "Name";
 
+	private String name;
+
 	public Faculty(String id) {
 		super(id);
 	}
-
-	private String name;
 
 	public Faculty(String id, String name) {
 		super(id);

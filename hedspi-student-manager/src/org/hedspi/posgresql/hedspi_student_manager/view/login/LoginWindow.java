@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
 import java.util.logging.Level;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
 import org.hedspi.posgresql.hedspi_student_manager.control.Control;
 import org.hedspi.posgresql.hedspi_student_manager.view.IView;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.CancelButton;
@@ -35,45 +37,6 @@ public class LoginWindow extends IFrameAskToClose implements IView {
 
 	public LoginWindow() {
 		setUIBase();
-	}
-
-	private void setUIBase() {
-		// base info
-		super.setTitle("Hedspi student manager - login");
-		super.setSize(DEFAULT_LOGIN_SIZE);
-		super.setResizable(false);
-
-		// add components
-		fl = new FlowLayout(FlowLayout.CENTER);
-		super.getContentPane().setLayout(fl);
-
-		// input field
-		addInputField();
-		addOkCancel();
-	}
-
-	private void addOkCancel() {
-		JButton loginButton = new LoginButton(this);
-		super.getContentPane().add(loginButton);
-		super.getRootPane().setDefaultButton(loginButton);
-
-		loginButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Properties prop = new Properties();
-				prop.setProperty("user", username.getValue());
-				prop.setProperty("password", password.getValue());
-				prop.setProperty("dbname", dbname.getValue());
-				prop.setProperty("host", host.getValue());
-				prop.setProperty("port", port.getValue());
-				Control.getInstance().fireByView(
-						((LoginButton) e.getSource()).getLoginWindow(),
-						"try-login", prop);
-			}
-		});
-
-		super.getContentPane().add(new CancelButton(this));
 	}
 
 	private void addInputField() {
@@ -104,6 +67,40 @@ public class LoginWindow extends IFrameAskToClose implements IView {
 
 	}
 
+	private void addOkCancel() {
+		JButton loginButton = new LoginButton(this);
+		super.getContentPane().add(loginButton);
+		super.getRootPane().setDefaultButton(loginButton);
+
+		loginButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Properties prop = new Properties();
+				prop.setProperty("user", username.getValue());
+				prop.setProperty("password", password.getValue());
+				prop.setProperty("dbname", dbname.getValue());
+				prop.setProperty("host", host.getValue());
+				prop.setProperty("port", port.getValue());
+				Control.getInstance().fireByView(
+						((LoginButton) e.getSource()).getLoginWindow(),
+						"try-login", prop);
+			}
+		});
+
+		super.getContentPane().add(new CancelButton(this));
+	}
+
+	@Override
+	public void close() {
+		if (JOptionPane.showConfirmDialog(this, "Are you sure want to quit?",
+				"Quit?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			super.setVisible(false);
+			super.dispose();
+		}
+		;
+	}
+
 	@Override
 	public void fire(String command, Object... data) {
 		switch (command) {
@@ -124,14 +121,19 @@ public class LoginWindow extends IFrameAskToClose implements IView {
 		}
 	}
 
-	@Override
-	public void close() {
-		if (JOptionPane.showConfirmDialog(this, "Are you sure want to quit?",
-				"Quit?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			super.setVisible(false);
-			super.dispose();
-		}
-		;
+	private void setUIBase() {
+		// base info
+		super.setTitle("Hedspi student manager - login");
+		super.setSize(DEFAULT_LOGIN_SIZE);
+		super.setResizable(false);
+
+		// add components
+		fl = new FlowLayout(FlowLayout.CENTER);
+		super.getContentPane().setLayout(fl);
+
+		// input field
+		addInputField();
+		addOkCancel();
 	}
 
 }

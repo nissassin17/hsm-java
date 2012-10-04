@@ -1,23 +1,24 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.util.list;
 
 import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
+import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.JScrollPane;
-
-import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
-import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
 public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 	/**
@@ -53,6 +54,7 @@ public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 		scrollPane.setViewportView(list_1);
 		list_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_1.addListSelectionListener(new ListSelectionListener() {
+			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				if (!arg0.getValueIsAdjusting()) {
 					JList<T> list = (JList<T>) arg0.getSource();

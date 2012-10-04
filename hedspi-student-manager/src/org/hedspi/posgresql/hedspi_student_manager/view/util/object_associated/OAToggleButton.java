@@ -12,8 +12,8 @@ public class OAToggleButton<T> extends OAComponentAbstract<String, T> {
 
 	JToggleButton toggleButton;
 
-	public JToggleButton getToggleButton() {
-		return toggleButton;
+	public OAToggleButton(IObjectUpdater<T, String> objectUpdater) {
+		this(objectUpdater, null);
 	}
 
 	public OAToggleButton(IObjectUpdater<T, String> objectUpdater, T object) {
@@ -28,8 +28,8 @@ public class OAToggleButton<T> extends OAComponentAbstract<String, T> {
 		});
 	}
 
-	public OAToggleButton(IObjectUpdater<T, String> objectUpdater) {
-		this(objectUpdater, null);
+	public JToggleButton getToggleButton() {
+		return toggleButton;
 	}
 
 	@Override

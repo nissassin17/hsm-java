@@ -1,9 +1,10 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.help.about;
 
-import javax.swing.JSplitPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import java.awt.Dimension;
+
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 
 public class UserPanel extends JSplitPane {
 

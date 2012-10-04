@@ -35,9 +35,17 @@ public class Control implements IControl {
 			+ (new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss").format(Calendar
 					.getInstance().getTime())) + ".log";
 	private static Control instance = null;
+	public static Control getInstance() {
+		if (instance == null)
+			instance = new Control();
+		return instance;
+	}
 	private Logger logger;
 	private FileHandler logFileHandler;
+
 	private AllFunction functionWindow;
+
+	private IView login;
 
 	/**
 	 * init and open log
@@ -58,14 +66,6 @@ public class Control implements IControl {
 		logFileHandler.setFormatter(new SimpleFormatter());
 		logger.addHandler(logFileHandler);
 	}
-
-	public static Control getInstance() {
-		if (instance == null)
-			instance = new Control();
-		return instance;
-	}
-
-	private IView login;
 
 	/**
 	 * triggered by any
@@ -103,6 +103,11 @@ public class Control implements IControl {
 							+ command);
 		}
 
+	}
+
+	@Override
+	public Logger getLogger() {
+		return logger;
 	}
 
 	private void start() {
@@ -143,10 +148,5 @@ public class Control implements IControl {
 			logger.log(Level.INFO, "Show main function window");
 			functionWindow.fire("set-visible", true);
 		}
-	}
-
-	@Override
-	public Logger getLogger() {
-		return logger;
 	}
 }

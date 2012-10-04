@@ -7,14 +7,10 @@ import javax.swing.event.DocumentListener;
 public class OATextField<T extends Object> extends
 		OAComponentAbstract<String, T> {
 
-	public OATextField(IObjectUpdater<T, String> textFieldUpdater) {
-		this(textFieldUpdater, null);
-	}
-
 	private JTextField textField;
 
-	public JTextField getTextField() {
-		return textField;
+	public OATextField(IObjectUpdater<T, String> textFieldUpdater) {
+		this(textFieldUpdater, null);
 	}
 
 	public OATextField(IObjectUpdater<T, String> textFieldUpdater, T objectArg) {
@@ -23,8 +19,8 @@ public class OATextField<T extends Object> extends
 		textField.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				changedUpdate(arg0);
+			public void changedUpdate(DocumentEvent arg0) {
+				updateObjectValue();
 			}
 
 			@Override
@@ -33,10 +29,14 @@ public class OATextField<T extends Object> extends
 			}
 
 			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				updateObjectValue();
+			public void removeUpdate(DocumentEvent arg0) {
+				changedUpdate(arg0);
 			}
 		});
+	}
+
+	public JTextField getTextField() {
+		return textField;
 	}
 
 	@Override

@@ -14,6 +14,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.hedspi.posgresql.hedspi_student_manager.control.Control;
@@ -30,16 +32,17 @@ public class AllFunction extends JFrame implements IView {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPaneMain;
 
-	private JFrame getFrame() {
-		return this;
-	}
-
 	/**
 	 * Create the frame.
 	 */
 	public AllFunction() {
 		setTitle("Hedspi Student Manager");
 		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				Control.getInstance().fire("exit");
+			}
+
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				if (JOptionPane.showConfirmDialog(arg0.getWindow(),
@@ -50,13 +53,8 @@ public class AllFunction extends JFrame implements IView {
 				}
 				;
 			}
-
-			@Override
-			public void windowClosed(WindowEvent e) {
-				Control.getInstance().fire("exit");
-			}
 		});
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 774, 478);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -70,6 +68,7 @@ public class AllFunction extends JFrame implements IView {
 
 		JButton btnAbout = new JButton("About");
 		btnAbout.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				(new AboutBox(getFrame())).setVisible(true);
 			}
@@ -80,7 +79,7 @@ public class AllFunction extends JFrame implements IView {
 		contentPaneMain.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPaneMain);
 
-		JTabbedPane tabbedPaneAll = new JTabbedPane(JTabbedPane.LEFT);
+		JTabbedPane tabbedPaneAll = new JTabbedPane(SwingConstants.LEFT);
 		contentPaneMain.add(tabbedPaneAll, BorderLayout.CENTER);
 
 		StudentPanel panel = new StudentPanel();
@@ -108,5 +107,9 @@ public class AllFunction extends JFrame implements IView {
 							command);
 			break;
 		}
+	}
+
+	private JFrame getFrame() {
+		return this;
 	}
 }

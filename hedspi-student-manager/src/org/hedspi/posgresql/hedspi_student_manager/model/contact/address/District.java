@@ -9,14 +9,21 @@ public class District extends HedspiObject {
 	public static final String NAME_CODE = "Name";
 	private static HedspiObjects<District> districts;
 
-	public static void setDistricts(HedspiObjects<District> districts) {
-		District.districts = districts;
-	}
-
 	public static HedspiObjects<District> getDistricts() {
 		return districts;
 	}
 
+	public static void setDistricts(HedspiObjects<District> districts) {
+		District.districts = districts;
+	}
+
+	private String name;
+
+	private City city;
+
+	public District(String id) {
+		super(id);
+	}
 	public District(String id, City myCity, String name) {
 		super(id);
 		this.city = myCity;
@@ -29,37 +36,31 @@ public class District extends HedspiObject {
 		this.city = myCity;
 	}
 
-	private String name;
-	private City city;
-
 	public City getCity() {
 		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public District(String id) {
-		super(id);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public City getMyCity() {
 		return city;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
 	public void setMyCity(City myCity) {
 		this.city = myCity;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
 	public String toString() {
 		return getName();
 	}

@@ -26,16 +26,6 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 	private City city;
 	private ListEditor<District> panel;
 
-	public City getCity() {
-		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-		textField_1.setText(city.getName());
-		getPanel_3().setHedspiObject(city.getDistricts());
-	}
-
 	/**
 	 * Create the panel.
 	 */
@@ -77,12 +67,22 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 		add(panel, "2, 6, fill, fill");
 	}
 
-	@Override
-	public void setObject(City obj) {
-		setCity(obj);
+	public City getCity() {
+		return city;
 	}
 
 	protected ListEditor<District> getPanel_3() {
 		return panel;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+		textField_1.setText(city.getName());
+		getPanel_3().setHedspiObject(city.getDistricts());
+	}
+
+	@Override
+	public void setObject(City obj) {
+		setCity(obj);
 	}
 }

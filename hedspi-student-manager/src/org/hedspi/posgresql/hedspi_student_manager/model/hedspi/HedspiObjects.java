@@ -16,53 +16,6 @@ public class HedspiObjects<T extends HedspiObject> extends HashMap<String, T> {
 
 	private SortedHedspiObjectsComboModel<T> comboBoxModel;
 
-	public SortedHedspiObjectsComboModel<T> getComboBoxModel() {
-		return comboBoxModel;
-	}
-
-	public void put(T value) {
-		this.put(value.getId(), value);
-	}
-
-	public HedspiObjects() {
-		super();
-		objectsContainersList = new ArrayList<>();
-		listModel = new SortedHedspiObjectsListModel<>();
-		registerObjectsContainer(listModel);
-		comboBoxModel = new SortedHedspiObjectsComboModel<>();
-		registerObjectsContainer(comboBoxModel);
-	}
-
-	private void registerObjectsContainer(IObjectsContainer<T> container) {
-		objectsContainersList.add(container);
-		container.removeAll();
-		for (T it : super.values())
-			container.addObject(it);
-	}
-
-	// private void unregisterObjectsContainer(IObjectsContainer<T> container){
-	// objectsContainersList.remove(container);
-	// }
-	@Override
-	public T put(String arg0, T arg1) {
-		T val = super.put(arg0, arg1);
-		if (val != null)
-			for (IObjectsContainer<T> it : objectsContainersList)
-				it.removeObject(val);
-		if (arg1 != null)
-			for (IObjectsContainer<T> it : objectsContainersList)
-				it.addObject(arg1);
-		return val;
-	}
-
-	public T removeObject(T arg0) {
-		T obj = super.remove(arg0.getId());
-		if (obj != null)
-			for (IObjectsContainer<T> it : objectsContainersList)
-				it.removeObject(obj);
-		return obj;
-	}
-
 	// public ArrayList<T> getSortedList(){
 	// ArrayList<T> arr = new ArrayList<>();
 	// for(T it : super.values())
@@ -89,7 +42,54 @@ public class HedspiObjects<T extends HedspiObject> extends HashMap<String, T> {
 	// }
 	private SortedHedspiObjectsListModel<T> listModel;
 
+	public HedspiObjects() {
+		super();
+		objectsContainersList = new ArrayList<>();
+		listModel = new SortedHedspiObjectsListModel<>();
+		registerObjectsContainer(listModel);
+		comboBoxModel = new SortedHedspiObjectsComboModel<>();
+		registerObjectsContainer(comboBoxModel);
+	}
+
+	public SortedHedspiObjectsComboModel<T> getComboBoxModel() {
+		return comboBoxModel;
+	}
+
 	public SortedHedspiObjectsListModel<T> getListModel() {
 		return listModel;
+	}
+
+	// private void unregisterObjectsContainer(IObjectsContainer<T> container){
+	// objectsContainersList.remove(container);
+	// }
+	@Override
+	public T put(String arg0, T arg1) {
+		T val = super.put(arg0, arg1);
+		if (val != null)
+			for (IObjectsContainer<T> it : objectsContainersList)
+				it.removeObject(val);
+		if (arg1 != null)
+			for (IObjectsContainer<T> it : objectsContainersList)
+				it.addObject(arg1);
+		return val;
+	}
+
+	public void put(T value) {
+		this.put(value.getId(), value);
+	}
+
+	private void registerObjectsContainer(IObjectsContainer<T> container) {
+		objectsContainersList.add(container);
+		container.removeAll();
+		for (T it : super.values())
+			container.addObject(it);
+	}
+
+	public T removeObject(T arg0) {
+		T obj = super.remove(arg0.getId());
+		if (obj != null)
+			for (IObjectsContainer<T> it : objectsContainersList)
+				it.removeObject(obj);
+		return obj;
 	}
 }

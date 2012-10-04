@@ -22,6 +22,18 @@ public class InputField extends JPanel {
 	JLabel label;
 	JTextField text;
 
+	public InputField(String say) {
+		this(say, "", false);
+	}
+
+	public InputField(String say, boolean isPasswordField) {
+		this(say, "", isPasswordField);
+	}
+
+	public InputField(String say, String defaultValue) {
+		this(say, defaultValue, false);
+	}
+
 	public InputField(String say, String defaultValue, boolean isPasswordField) {
 		super();
 		FlowLayout fl = new FlowLayout(FlowLayout.LEFT, 5, 5);
@@ -36,14 +48,14 @@ public class InputField extends JPanel {
 		text.addFocusListener(new FocusListener() {
 
 			@Override
-			public void focusLost(FocusEvent e) {
-				((JTextField) e.getComponent()).select(0, 0);
-
+			public void focusGained(FocusEvent e) {
+				((JTextField) e.getComponent()).selectAll();
 			}
 
 			@Override
-			public void focusGained(FocusEvent e) {
-				((JTextField) e.getComponent()).selectAll();
+			public void focusLost(FocusEvent e) {
+				((JTextField) e.getComponent()).select(0, 0);
+
 			}
 		});
 		setValue(defaultValue);
@@ -52,7 +64,7 @@ public class InputField extends JPanel {
 		label = new JLabel();
 		label.setLabelFor(text);
 		setLabel(say);
-		label.setPreferredSize(new Dimension(LABEL_SIZE, (int) label
+		label.setPreferredSize(new Dimension(LABEL_SIZE, label
 				.getPreferredSize().height));
 
 		// add
@@ -60,31 +72,19 @@ public class InputField extends JPanel {
 		super.add(text);
 	}
 
-	private void setValue(String defaultValue) {
-		text.setText(defaultValue);
+	public String getValue() {
+		return text.getText();
 	}
 
 	private void setLabel(String say) {
 		label.setText(say);
 	}
 
-	public InputField(String say) {
-		this(say, "", false);
-	}
-
-	public InputField(String say, String defaultValue) {
-		this(say, defaultValue, false);
-	}
-
-	public InputField(String say, boolean isPasswordField) {
-		this(say, "", isPasswordField);
-	}
-
-	public String getValue() {
-		return text.getText();
-	}
-
 	public void setMnemonic(char c) {
 		label.setDisplayedMnemonic(c);
+	}
+
+	private void setValue(String defaultValue) {
+		text.setText(defaultValue);
 	}
 }

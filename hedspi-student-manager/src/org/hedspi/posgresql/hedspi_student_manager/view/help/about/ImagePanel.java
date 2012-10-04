@@ -1,5 +1,6 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.help.about;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,10 +12,9 @@ import javax.swing.JPanel;
 
 import org.hedspi.posgresql.hedspi_student_manager.control.Control;
 
-import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import java.awt.Dimension;
 
 public class ImagePanel extends JPanel {
 
@@ -22,6 +22,10 @@ public class ImagePanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	private String fileName;
+
+	private BufferedImage image;
 
 	/**
 	 * Create the panel.
@@ -48,12 +52,9 @@ public class ImagePanel extends JPanel {
 			return;
 		}
 	}
-
+	@Override
 	public void paint(Graphics g) {
 		if (image != null)
 			g.drawImage(image, 0, 0, 100, 100, null);
 	}
-
-	private String fileName;
-	private BufferedImage image;
 }

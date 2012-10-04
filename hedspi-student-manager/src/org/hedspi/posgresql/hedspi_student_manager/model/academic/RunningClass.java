@@ -7,53 +7,17 @@ import org.hedspi.posgresql.hedspi_student_manager.model.contact.Student;
 import org.hedspi.posgresql.hedspi_student_manager.model.material.Room;
 
 public class RunningClass {
-	public Room getRoom() {
-		return room;
-	}
+	private Room room;
 
-	public void setRoom(Room room) {
-		this.room = room;
-	}
+	private Lecturer lecturer;
 
-	public Lecturer getLecturer() {
-		return lecturer;
-	}
+	private ArrayList<Student> students;
 
-	public void setLecturer(Lecturer lecturer) {
-		this.lecturer = lecturer;
-	}
+	private Course course;
 
-	public ArrayList<Student> getStudents() {
-		return students;
-	}
+	private String result;
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
-	}
-
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
-
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-
-	public boolean isFinished() {
-		return isFinished;
-	}
-
-	public void setFinished(boolean isFinished) {
-		this.isFinished = isFinished;
-	}
+	boolean isFinished;
 
 	public RunningClass(Room room, Lecturer lecturer,
 			ArrayList<Student> students, Course course, String result,
@@ -67,10 +31,46 @@ public class RunningClass {
 		this.isFinished = isFinished;
 	}
 
-	private Room room;
-	private Lecturer lecturer;
-	private ArrayList<Student> students;
-	private Course course;
-	private String result;
-	boolean isFinished;
+	public Course getCourse() {
+		return course;
+	}
+
+	public Lecturer getLecturer() {
+		return lecturer;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public ArrayList<Student> getStudents() {
+		return students;
+	}
+
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
+	}
+	public void setLecturer(Lecturer lecturer) {
+		this.lecturer = lecturer;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+	public void setStudents(ArrayList<Student> students) {
+		this.students = students;
+	}
 }

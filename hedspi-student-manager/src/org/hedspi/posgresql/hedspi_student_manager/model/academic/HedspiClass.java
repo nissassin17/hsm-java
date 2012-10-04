@@ -11,21 +11,26 @@ public class HedspiClass extends HedspiObject {
 	public static final String NAME_CODE = "Name";
 	private static HedspiObjects<HedspiClass> classes;
 
-	public static void setClasses(HedspiObjects<HedspiClass> classes) {
-		HedspiClass.classes = classes;
-	}
-
 	public static HedspiObjects<HedspiClass> getClasses() {
 		return classes;
 	}
 
-	private String name;
-
-	public String getName() {
-		return name;
+	public static void setClasses(HedspiObjects<HedspiClass> classes) {
+		HedspiClass.classes = classes;
 	}
 
-	public void setName(String name) {
+	private String name;
+
+	private Lecturer lecturer;
+
+	private HedspiObjects<Student> students;
+
+	public HedspiClass(String id) {
+		super(id);
+	}
+
+	public HedspiClass(String id, String name) {
+		super(id);
 		this.name = name;
 	}
 
@@ -33,8 +38,8 @@ public class HedspiClass extends HedspiObject {
 		return lecturer;
 	}
 
-	public void setLecturer(Lecturer lecturer) {
-		this.lecturer = lecturer;
+	public String getName() {
+		return name;
 	}
 
 	public HedspiObjects<Student> getStudents() {
@@ -43,20 +48,15 @@ public class HedspiClass extends HedspiObject {
 		return students;
 	}
 
-	public void setStudents(HedspiObjects<Student> students) {
-		this.students = students;
+	public void setLecturer(Lecturer lecturer) {
+		this.lecturer = lecturer;
 	}
-
-	public HedspiClass(String id, String name) {
-		super(id);
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	private Lecturer lecturer;
-	private HedspiObjects<Student> students;
-
-	public HedspiClass(String id) {
-		super(id);
+	public void setStudents(HedspiObjects<Student> students) {
+		this.students = students;
 	}
 
 	@Override

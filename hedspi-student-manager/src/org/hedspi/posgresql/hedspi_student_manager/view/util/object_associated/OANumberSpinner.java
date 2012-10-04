@@ -9,11 +9,26 @@ public class OANumberSpinner<T> extends OAComponentAbstract<String, T> {
 
 	JSpinner spinner;
 
-	public JSpinner getSpinner() {
-		return spinner;
+	SpinnerNumberModel model;
+
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater) {
+		this(objectUpdater, null);
 	}
 
-	SpinnerNumberModel model;
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater,
+			int defaultValue, int minValue, int maxValue, int step) {
+		this(objectUpdater, null, defaultValue, minValue, maxValue, step);
+	}
+
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object) {
+		this(objectUpdater, object, new SpinnerNumberModel());
+	}
+
+	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object,
+			int defaultValue, int minValue, int maxValue, int step) {
+		this(objectUpdater, object, new SpinnerNumberModel(defaultValue,
+				minValue, maxValue, step));
+	}
 
 	private OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object,
 			SpinnerNumberModel model) {
@@ -29,23 +44,8 @@ public class OANumberSpinner<T> extends OAComponentAbstract<String, T> {
 		});
 	}
 
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater,
-			int defaultValue, int minValue, int maxValue, int step) {
-		this(objectUpdater, null, defaultValue, minValue, maxValue, step);
-	}
-
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object,
-			int defaultValue, int minValue, int maxValue, int step) {
-		this(objectUpdater, object, new SpinnerNumberModel(defaultValue,
-				minValue, maxValue, step));
-	}
-
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater, T object) {
-		this(objectUpdater, object, new SpinnerNumberModel());
-	}
-
-	public OANumberSpinner(IObjectUpdater<T, String> objectUpdater) {
-		this(objectUpdater, null);
+	public JSpinner getSpinner() {
+		return spinner;
 	}
 
 	@Override

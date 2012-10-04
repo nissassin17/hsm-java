@@ -8,10 +8,6 @@ public class OAEditorPane<T> extends OAComponentAbstract<String, T> {
 
 	JEditorPane editorPane;
 
-	public JEditorPane getEditorPane() {
-		return editorPane;
-	}
-
 	public OAEditorPane(IObjectUpdater<T, String> objectUpdater) {
 		this(objectUpdater, null);
 	}
@@ -22,8 +18,8 @@ public class OAEditorPane<T> extends OAComponentAbstract<String, T> {
 		editorPane.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				changedUpdate(arg0);
+			public void changedUpdate(DocumentEvent arg0) {
+				updateObjectValue();
 			}
 
 			@Override
@@ -32,11 +28,15 @@ public class OAEditorPane<T> extends OAComponentAbstract<String, T> {
 			}
 
 			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				updateObjectValue();
+			public void removeUpdate(DocumentEvent arg0) {
+				changedUpdate(arg0);
 			}
 		});
 
+	}
+
+	public JEditorPane getEditorPane() {
+		return editorPane;
 	}
 
 	@Override

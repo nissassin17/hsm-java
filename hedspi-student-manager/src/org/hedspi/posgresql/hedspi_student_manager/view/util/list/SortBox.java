@@ -1,25 +1,25 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.util.list;
 
-import javax.swing.JPanel;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class SortBox<T extends Object> extends JPanel {
 
@@ -32,6 +32,101 @@ public class SortBox<T extends Object> extends JPanel {
 	private JRadioButton rdbtnCase;
 	private JRadioButton rdbtnNocase;
 	private JRadioButton rdbtnSmart;
+
+	/**
+	 * Create the frame.
+	 */
+	public SortBox(DefaultListModel<T> model) {
+		this.model = model;
+		setBounds(100, 100, 326, 67);
+		setLayout(new FormLayout(new ColumnSpec[] {
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"), }, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, }));
+
+		JPanel panel = new JPanel();
+		add(panel, "2, 2, fill, top");
+		panel.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("58px"),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("86px:grow"), }, new RowSpec[] {
+				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), }));
+
+		JLabel lblSortBox = DefaultComponentFactory.getInstance().createLabel(
+				"Sort box");
+		panel.add(lblSortBox, "1, 2, left, center");
+
+		textField = new JTextField();
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				resort(textField.getText(), getCase(textField.getText()));
+			}
+
+			private boolean getCase(String text) {
+				if (rdbtnCase.isSelected())
+					return true;
+				if (rdbtnNocase.isSelected())
+					return false;
+				for (char c : text.toCharArray()) {
+					if (Character.isUpperCase(c))
+						return true;
+				}
+				return false;
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				changedUpdate(arg0);
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				insertUpdate(arg0);
+			}
+		});
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				((JTextField) arg0.getComponent()).selectAll();
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				((JTextField) e.getComponent()).select(0, 0);
+			}
+		});
+		panel.add(textField, "3, 2, fill, top");
+		textField.setColumns(10);
+
+		JPanel panel_1 = new JPanel();
+		add(panel_1, "2, 4, fill, top");
+		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("49px:grow"),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("61px:grow"),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("53px:grow"), }, new RowSpec[] {
+				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("23px"), }));
+
+		rdbtnCase = new JRadioButton("Case");
+		panel_1.add(rdbtnCase, "1, 2, right, top");
+
+		rdbtnNocase = new JRadioButton("Nocase");
+		panel_1.add(rdbtnNocase, "3, 2, center, top");
+
+		rdbtnSmart = new JRadioButton("Smart");
+		rdbtnSmart.setSelected(true);
+		panel_1.add(rdbtnSmart, "5, 2, left, top");
+
+		ButtonGroup caseGroup = new ButtonGroup();
+		caseGroup.add(rdbtnCase);
+		caseGroup.add(rdbtnNocase);
+		caseGroup.add(rdbtnSmart);
+
+	}
 
 	private void resort(final String text, final boolean isCase) {
 		ArrayList<T> list = new ArrayList<>();
@@ -74,101 +169,6 @@ public class SortBox<T extends Object> extends JPanel {
 
 		for (T it : list)
 			model.addElement(it);
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public SortBox(DefaultListModel<T> model) {
-		this.model = model;
-		setBounds(100, 100, 326, 67);
-		setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"), }, new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, }));
-
-		JPanel panel = new JPanel();
-		add(panel, "2, 2, fill, top");
-		panel.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("58px"),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("86px:grow"), }, new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), }));
-
-		JLabel lblSortBox = DefaultComponentFactory.getInstance().createLabel(
-				"Sort box");
-		panel.add(lblSortBox, "1, 2, left, center");
-
-		textField = new JTextField();
-		textField.getDocument().addDocumentListener(new DocumentListener() {
-
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				insertUpdate(arg0);
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				changedUpdate(arg0);
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				resort(textField.getText(), getCase(textField.getText()));
-			}
-
-			private boolean getCase(String text) {
-				if (rdbtnCase.isSelected())
-					return true;
-				if (rdbtnNocase.isSelected())
-					return false;
-				for (char c : text.toCharArray()) {
-					if (Character.isUpperCase(c))
-						return true;
-				}
-				return false;
-			}
-		});
-		textField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				((JTextField) arg0.getComponent()).selectAll();
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				((JTextField) e.getComponent()).select(0, 0);
-			}
-		});
-		panel.add(textField, "3, 2, fill, top");
-		textField.setColumns(10);
-
-		JPanel panel_1 = new JPanel();
-		add(panel_1, "2, 4, fill, top");
-		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("49px:grow"),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("61px:grow"),
-				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("53px:grow"), }, new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("23px"), }));
-
-		rdbtnCase = new JRadioButton("Case");
-		panel_1.add(rdbtnCase, "1, 2, right, top");
-
-		rdbtnNocase = new JRadioButton("Nocase");
-		panel_1.add(rdbtnNocase, "3, 2, center, top");
-
-		rdbtnSmart = new JRadioButton("Smart");
-		rdbtnSmart.setSelected(true);
-		panel_1.add(rdbtnSmart, "5, 2, left, top");
-
-		ButtonGroup caseGroup = new ButtonGroup();
-		caseGroup.add(rdbtnCase);
-		caseGroup.add(rdbtnNocase);
-		caseGroup.add(rdbtnSmart);
-
 	}
 
 }

@@ -10,36 +10,28 @@ public class Student extends HedspiObject {
 	public static final String ENROLL_POINT_CODE = "EnrollPoint";
 	public static final String ENROLL_YEAR_CODE = "EnrollYear";
 
-	public Contact getContact() {
-		return contact;
+	public static HedspiObjects<Student> getStudents() {
+		return students;
 	}
 
-	public void setContact(Contact contact) {
-		this.contact = contact;
+	public static void setStudents(HedspiObjects<Student> students) {
+		Student.students = students;
 	}
 
-	public double getEnrollPoint() {
-		return enrollPoint;
-	}
+	private Contact contact;
 
-	public void setEnrollPoint(double enrollPoint) {
-		this.enrollPoint = enrollPoint;
-	}
+	private double enrollPoint;
 
-	public int getEnrollYear() {
-		return enrollYear;
-	}
+	private int enrollYear;
 
-	public void setEnrollYear(int enrollYear) {
-		this.enrollYear = enrollYear;
-	}
+	private HedspiClass myClass;
 
-	public HedspiClass getMyClass() {
-		return myClass;
-	}
+	private String Mssv;
 
-	public void setMyClass(HedspiClass myClass) {
-		this.myClass = myClass;
+	private static HedspiObjects<Student> students;
+
+	public Student(String id) {
+		super(id);
 	}
 
 	public Student(String id, Contact contact, double enrollPoint,
@@ -51,37 +43,45 @@ public class Student extends HedspiObject {
 		this.myClass = myClass;
 		Mssv = mssv;
 	}
-
-	private Contact contact;
-	private double enrollPoint;
-	private int enrollYear;
-	private HedspiClass myClass;
-	private String Mssv;
-
+	public Contact getContact() {
+		return contact;
+	}
+	public double getEnrollPoint() {
+		return enrollPoint;
+	}
+	public int getEnrollYear() {
+		return enrollYear;
+	}
 	public String getMssv() {
 		return Mssv;
+	}
+
+	public HedspiClass getMyClass() {
+		return myClass;
+	}
+
+	public String getName() {
+		return getContact().getName();
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+
+	public void setEnrollPoint(double enrollPoint) {
+		this.enrollPoint = enrollPoint;
+	}
+
+	public void setEnrollYear(int enrollYear) {
+		this.enrollYear = enrollYear;
 	}
 
 	public void setMssv(String mssv) {
 		Mssv = mssv;
 	}
 
-	private static HedspiObjects<Student> students;
-
-	public static void setStudents(HedspiObjects<Student> students) {
-		Student.students = students;
-	}
-
-	public static HedspiObjects<Student> getStudents() {
-		return students;
-	}
-
-	public Student(String id) {
-		super(id);
-	}
-
-	public String getName() {
-		return getContact().getName();
+	public void setMyClass(HedspiClass myClass) {
+		this.myClass = myClass;
 	}
 
 	@Override
