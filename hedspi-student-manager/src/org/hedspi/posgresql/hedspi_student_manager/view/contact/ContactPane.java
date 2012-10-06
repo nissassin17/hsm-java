@@ -26,8 +26,10 @@ import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.SortedHedspiObje
 import org.hedspi.posgresql.hedspi_student_manager.view.util.list.DefaultListEditor;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.IObjectUpdater;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OAComboBox;
+import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OADateSpinner;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OAEditorPane;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OATextField;
+import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OAToggleButton;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.factories.FormFactory;
@@ -65,6 +67,8 @@ public class ContactPane extends JPanel {
 	private OAEditorPane<Contact> oaNote;
 	private OAComboBox<District, Contact> oaDistrict;
 	private Contact contact;
+	private OAToggleButton<Contact> oaToggleButtonSex;
+	private OADateSpinner<Contact> oaSpinnerDob;
 	/**
 	 * Create the panel.
 	 */
@@ -106,7 +110,22 @@ public class ContactPane extends JPanel {
 		comboBoxDistrict = oaDistrict.getComboBox();
 		comboBoxDistrict.setModel(districtModel);
 
-		toggleButtonSex = new JToggleButton("Male");
+		oaToggleButtonSex = new OAToggleButton<Contact>(new IObjectUpdater<Contact, String>() {
+
+			@Override
+			public String getValue(Contact object) {
+				if (object.isMan())
+					return OAToggleButton.FALSE;
+				return OAToggleButton.TRUE;
+			}
+
+			@Override
+			public void setValue(Contact object, String value) {
+				object.setMan(value.equals(OAToggleButton.FALSE));
+			}
+		});
+		toggleButtonSex = oaToggleButtonSex.getToggleButton();
+		toggleButtonSex.setText("Male");
 		toggleButtonSex.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
@@ -175,6 +194,7 @@ public class ContactPane extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				JComboBox<City> cities = (JComboBox<City>) arg0.getSource();
 				City currentCity = cities.getItemAt(cities.getSelectedIndex());
+				if (currentCity != null)
 				setCity(currentCity);
 			}
 
@@ -211,6 +231,18 @@ public class ContactPane extends JPanel {
 		add(toggleButtonSex, "4, 9, left, top");
 		add(label_5, "3, 11, left, center");
 
+		oaSpinnerDob = new OADateSpinner<Contact>(new IObjectUpdater<Contact, Date>() {
+
+			@Override
+			public Date getValue(Contact object) {
+				return object.getDob();
+			}
+
+			@Override
+			public void setValue(Contact object, Date value) {
+				object.setDob(value);
+			}
+		});
 		spinnerDob = new JSpinner();
 		spinnerDob.setModel(new SpinnerDateModel(new Date(1349197200000L),
 				null, null, Calendar.DAY_OF_YEAR));
@@ -256,7 +288,7 @@ public class ContactPane extends JPanel {
 						object.setNote(value);
 					}
 				});
-		editorPanelNote = new JEditorPane();
+		editorPanelNote = oaNote.getEditorPane();
 		editorPanelNote.setBorder(new LineBorder(new Color(0, 0, 0)));
 		add(editorPanelNote, "4, 23, fill, fill");
 
@@ -282,10 +314,6 @@ public class ContactPane extends JPanel {
 		return listPhone;
 	}
 
-	protected JToggleButton getToggleButtonSex() {
-		return toggleButtonSex;
-	}
-
 	private void setCity(City currentCity) {
 		getComboBox_1().setSelectedItem(currentCity);
 		getComboBox().setModel(currentCity.getDistricts().getComboBoxModel());
@@ -293,8 +321,7 @@ public class ContactPane extends JPanel {
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
-		spinnerDob.setModel(new SpinnerDateModel(contact.getDob(), null, null,
-				Calendar.DAY_OF_YEAR));
+		oaSpinnerDob.setObject(contact);
 		oaFirst.setObject(contact);
 		oaLast.setObject(contact);
 		oaHome.setObject(contact);
@@ -307,7 +334,7 @@ public class ContactPane extends JPanel {
 		setCity(contact.getDistrict().getCity());
 		oaDistrict.setObject(contact);
 
-		getToggleButtonSex().setSelected(!contact.isMan());
+		oaToggleButtonSex.setObject(contact);
 	}
 
 	public void setListEmail(DefaultListEditor listEmail) {

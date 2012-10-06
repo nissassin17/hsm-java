@@ -35,11 +35,13 @@ public class Control implements IControl {
 			+ (new SimpleDateFormat("yyyy-MM-dd--HH-mm-ss").format(Calendar
 					.getInstance().getTime())) + ".log";
 	private static Control instance = null;
+
 	public static Control getInstance() {
 		if (instance == null)
 			instance = new Control();
 		return instance;
 	}
+
 	private Logger logger;
 	private FileHandler logFileHandler;
 
@@ -97,6 +99,27 @@ public class Control implements IControl {
 		case "try-login":
 			tryLogin(view, (Properties) data[0]);
 			break;
+
+		case "reload":
+			getLogger().log(Level.INFO, "Reload all data from database");
+			Model.getInstance().setData("reload");
+			view.fire("repaint");
+			Control.getInstance().getLogger().log(Level.INFO, "Reload done");
+			break;
+
+		case "commit":
+			getLogger().log(Level.INFO, "Commit changes");
+			if (Model.getInstance().setData("commit")) {
+				view.fire("commitResult", true);
+				Control.getInstance().getLogger()
+						.log(Level.INFO, "Commit done");
+			} else {
+				view.fire("commitResult", false);
+				Control.getInstance().getLogger()
+						.log(Level.SEVERE, "Commit failed");
+			}
+			break;
+
 		default:
 			logger.log(Level.WARNING,
 					"A view has fired Control an operation that is not supported.\nCommand: "

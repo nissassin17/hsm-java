@@ -15,6 +15,7 @@ import org.hedspi.posgresql.hedspi_student_manager.service.AddressService;
 import org.hedspi.posgresql.hedspi_student_manager.service.ClassService;
 import org.hedspi.posgresql.hedspi_student_manager.service.ContactService;
 import org.hedspi.posgresql.hedspi_student_manager.service.CoreService;
+import org.hedspi.posgresql.hedspi_student_manager.service.ServiceAll;
 import org.hedspi.posgresql.hedspi_student_manager.service.StudentService;
 
 public class Model implements IModel {
@@ -58,17 +59,49 @@ public class Model implements IModel {
 	}
 
 	@Override
-	public void setData(String command, Object... data) {
+	public boolean setData(String command, Object... data) {
 		switch (command) {
 		case "cloneDatabase":
 			cloneDatabase();
-			break;
+			return true;
+			
+		case "reload":
+			reload();
+			return true;
+			
+		case "commit":
+			return commit();
+			
 		default:
 			Control.getInstance()
 					.getLogger()
 					.log(Level.WARNING,
 							"Unsupported setData operation  - " + command);
+			return false;
 		}
+	}
+
+	private boolean commit() {
+		return ServiceAll.commit();
+	}
+
+	private void reload() {
+		Contact.getContacts().clear();
+		City.getCities().clear();
+		District.getDistricts().clear();
+		HedspiClass.getClasses().clear();
+		Student.getStudents().clear();
+		appendDatabase();
+	}
+	
+	private void appendDatabase() {
+		Pair<HedspiObjects<City>, HedspiObjects<District>> val = AddressService
+				.getAddresses();
+		City.getCities().putAll(val.getObject0());
+		District.getDistricts().putAll(val.getObject1());
+		Contact.getContacts().putAll(ContactService.getContacts());
+		HedspiClass.getClasses().putAll(ClassService.getClasses());
+		Student.getStudents().putAll(StudentService.getStudentList());
 	}
 
 }

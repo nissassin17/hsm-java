@@ -7,8 +7,8 @@ import javax.swing.JToggleButton;
 
 public class OAToggleButton<T> extends OAComponentAbstract<String, T> {
 
-	private final static String TRUE = "true";
-	private final static String FALSE = "false";
+	public final static String TRUE = "true";
+	public final static String FALSE = "false";
 
 	JToggleButton toggleButton;
 

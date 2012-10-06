@@ -5,6 +5,13 @@ import java.util.HashMap;
 
 public class HedspiObjects<T extends HedspiObject> extends HashMap<String, T> {
 
+	public void putAll(HedspiObjects<T> m) {
+		super.putAll(m);
+		for (IObjectsContainer<T> it : objectsContainersList) {
+			it.addObjects(m.values());
+		}
+	}
+
 	/**
 	 * 
 	 */
@@ -83,6 +90,13 @@ public class HedspiObjects<T extends HedspiObject> extends HashMap<String, T> {
 		container.removeAll();
 		for (T it : super.values())
 			container.addObject(it);
+	}
+
+	@Override
+	public void clear() {
+		super.clear();
+		for(IObjectsContainer<T> it : objectsContainersList)
+			it.removeAll();
 	}
 
 	public T removeObject(T arg0) {

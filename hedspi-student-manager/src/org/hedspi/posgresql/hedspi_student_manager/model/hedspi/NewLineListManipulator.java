@@ -19,6 +19,11 @@ public class NewLineListManipulator extends HedspiObjects<HedspiObject> {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return getEndlnString();
+	}
+
 	public void parse(String endlInput) {
 		super.clear();
 		String[] vals = endlInput.split("\n");

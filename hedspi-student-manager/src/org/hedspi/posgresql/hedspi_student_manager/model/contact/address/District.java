@@ -2,6 +2,7 @@ package org.hedspi.posgresql.hedspi_student_manager.model.contact.address;
 
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
+import org.hedspi.posgresql.hedspi_student_manager.util.HedspiUtil;
 
 public class District extends HedspiObject {
 
@@ -10,6 +11,8 @@ public class District extends HedspiObject {
 	private static HedspiObjects<District> districts;
 
 	public static HedspiObjects<District> getDistricts() {
+		if (districts == null)
+			districts = new HedspiObjects<>();
 		return districts;
 	}
 
@@ -63,6 +66,13 @@ public class District extends HedspiObject {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	public String getInsertQuery() {
+		return String.format("insert into \"District\" (\"DT#\", \"CY#\", \"Name\") values(%s, %s,'%s')",
+				HedspiUtil.quoteConvert(super.getId()),
+				HedspiUtil.quoteConvert(getCity().getId()),
+				HedspiUtil.quoteConvert(getName()));
 	}
 
 }

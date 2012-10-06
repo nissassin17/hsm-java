@@ -2,9 +2,8 @@ package org.hedspi.posgresql.hedspi_student_manager.model.hedspi;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
-public class SortedList<T extends Comparable<Object>> extends ArrayList<T> {
+public class SortedList<T extends HedspiObject> extends ArrayList<T> {
 
 	/**
 	 * 
@@ -13,14 +12,10 @@ public class SortedList<T extends Comparable<Object>> extends ArrayList<T> {
 
 	@Override
 	public boolean add(T arg0) {
+		if (super.contains(arg0))
+			return false;
 		boolean ret = super.add(arg0);
-		Collections.sort(this, new Comparator<Object>() {
-
-			@Override
-			public int compare(Object o1, Object o2) {
-				return o1.toString().compareToIgnoreCase(o2.toString());
-			}
-		});
+		Collections.sort(this);
 		return ret;
 	}
 }

@@ -4,6 +4,7 @@ import org.hedspi.posgresql.hedspi_student_manager.model.contact.Lecturer;
 import org.hedspi.posgresql.hedspi_student_manager.model.contact.Student;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
+import org.hedspi.posgresql.hedspi_student_manager.util.HedspiUtil;
 
 public class HedspiClass extends HedspiObject {
 
@@ -12,6 +13,8 @@ public class HedspiClass extends HedspiObject {
 	private static HedspiObjects<HedspiClass> classes;
 
 	public static HedspiObjects<HedspiClass> getClasses() {
+		if (classes == null)
+			classes = new HedspiObjects<>();
 		return classes;
 	}
 
@@ -62,5 +65,11 @@ public class HedspiClass extends HedspiObject {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	public String getInsertQuery() {
+		return String.format("insert into \"Class\" (\"CL#\", \"Name\") values (%s, '%s')",
+				HedspiUtil.quoteConvert(super.getId()),
+				HedspiUtil.quoteConvert(getName()));
 	}
 }

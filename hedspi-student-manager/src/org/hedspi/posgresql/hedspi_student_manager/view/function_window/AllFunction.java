@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -64,9 +65,19 @@ public class AllFunction extends JFrame implements IView {
 		menuBar.add(mnOperation);
 		
 		JMenuItem mntmCommit = new JMenuItem("Commit");
+		mntmCommit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Control.getInstance().fireByView(getFrame(), "commit");
+			}
+		});
 		mnOperation.add(mntmCommit);
 		
 		JMenuItem mntmReload = new JMenuItem("Reload");
+		mntmReload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Control.getInstance().fireByView(getFrame(), "reload");
+			}
+		});
 		mnOperation.add(mntmReload);
 
 		JMenu mnHelp = new JMenu("Help");
@@ -103,6 +114,19 @@ public class AllFunction extends JFrame implements IView {
 		case "set-visible":
 			super.setVisible((boolean) data[0]);
 			break;
+		case "repaint":
+			super.revalidate();
+			super.repaint();
+			Control.getInstance().getLogger().log(Level.INFO, "UI repainted ok");
+			JOptionPane.showMessageDialog(this, "Reload database ok!", "Reload ok", JOptionPane.INFORMATION_MESSAGE);
+			break;
+			
+		case "commitResult":
+			if ((boolean)data[0])
+				JOptionPane.showMessageDialog(this, "Commit done", "Commit done", JOptionPane.INFORMATION_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(this, "Commit failed", "Commit failed", JOptionPane.ERROR_MESSAGE);
+			break;
 
 		default:
 			Control.getInstance()
@@ -114,7 +138,7 @@ public class AllFunction extends JFrame implements IView {
 		}
 	}
 
-	private JFrame getFrame() {
+	private AllFunction getFrame() {
 		return this;
 	}
 }

@@ -6,6 +6,7 @@ import org.hedspi.posgresql.hedspi_student_manager.model.contact.address.Distric
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.NewLineListManipulator;
+import org.hedspi.posgresql.hedspi_student_manager.util.HedspiUtil;
 
 public class Contact extends HedspiObject {
 
@@ -22,6 +23,8 @@ public class Contact extends HedspiObject {
 	public static final String HOME_CODE = "Home";
 
 	public static HedspiObjects<Contact> getContacts() {
+		if (contacts == null)
+			contacts = new HedspiObjects<>();
 		return contacts;
 	}
 
@@ -150,6 +153,24 @@ public class Contact extends HedspiObject {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	public String getInsertQuery() {
+		return String.format(
+				"insert into \"Contact\" (\"FirstName\", \"LastName\", \"Sex\", \"DOB\", \"Email\", \"Phone\", \"ImageUrl\", \"Notes\", \"Home\", \"CT#\", \"DT#\")" +
+				"values('%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', '%s', %s, %s)",
+				HedspiUtil.quoteConvert(getFirstName()),
+				HedspiUtil.quoteConvert(getLastName()),
+				HedspiUtil.quoteConvert(isMan() ? "true" : "false"),
+				HedspiUtil.quoteConvert(getDob().toString()),
+				HedspiUtil.quoteConvert(getEmail().toString()),
+				HedspiUtil.quoteConvert(getPhone().toString()),
+				HedspiUtil.quoteConvert(getImage().toString()),
+				HedspiUtil.quoteConvert(getNote()),
+				HedspiUtil.quoteConvert(getHome()),
+				HedspiUtil.quoteConvert(getId()),
+				HedspiUtil.quoteConvert(getDistrict().getId())
+				);
 	}
 
 }

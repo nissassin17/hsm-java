@@ -60,7 +60,7 @@ public class CoreService {
 
 	private Properties loginInfo;
 
-	private void closeConnection(Connection conn) {
+	private void close(Connection conn) {
 		if (conn != null)
 			try {
 				conn.close();
@@ -70,7 +70,7 @@ public class CoreService {
 			}
 	}
 
-	private void closeResultSet(ResultSet rs) {
+	private void close(ResultSet rs) {
 		if (rs != null)
 			try {
 				rs.close();
@@ -80,7 +80,7 @@ public class CoreService {
 			}
 	}
 
-	private void closeStatement(Statement stmt) {
+	private void close(Statement stmt) {
 		if (stmt != null) {
 			try {
 				stmt.close();
@@ -148,7 +148,7 @@ public class CoreService {
 
 		Statement stmt = getStatement(conn);
 		if (stmt == null) {
-			closeConnection(conn);
+			close(conn);
 			return null;
 		}
 
@@ -157,13 +157,13 @@ public class CoreService {
 			rs = stmt.executeQuery(queryStr);
 		} catch (SQLException e) {
 			Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
-			closeStatement(stmt);
-			closeConnection(conn);
+			close(stmt);
+			close(conn);
 			return null;
 		}
 		if (rs == null) {
-			closeStatement(stmt);
-			closeConnection(conn);
+			close(stmt);
+			close(conn);
 			return null;
 		}
 
@@ -182,12 +182,46 @@ public class CoreService {
 		} catch (SQLException e) {
 			Control.getInstance().getLogger().log(Level.SEVERE, e.getMessage());
 		} finally {
-			closeResultSet(rs);
-			closeStatement(stmt);
-			closeConnection(conn);
+			close(rs);
+			close(stmt);
+			close(conn);
 		}
 		return result;
+	}
 
+	/**
+	 * @param queries
+	 *            query list
+	 * @return number of success queries
+	 */
+	public int update(String[] queries) {
+		Control.getInstance().getLogger()
+				.log(Level.INFO, "Execute many queries");
+
+		Connection conn = getConnection();
+		if (conn == null)
+			return 0;
+
+		Statement stmt = getStatement(conn);
+		if (stmt == null) {
+			close(conn);
+			return 0;
+		}
+
+		int cnt = 0;
+		for (String queryStr : queries) {
+			try {
+				stmt.executeUpdate(queryStr);
+				cnt++;
+			} catch (SQLException e) {
+				Control.getInstance().getLogger()
+						.log(Level.SEVERE, e.getMessage());
+			}
+		}
+
+		close(stmt);
+		close(conn);
+		return cnt;
 	}
 
 	public void setLoginInfo(Properties loginInfo) {

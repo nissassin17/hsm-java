@@ -1,5 +1,7 @@
 package org.hedspi.posgresql.hedspi_student_manager.model.hedspi;
 
+import java.util.Collection;
+
 import javax.swing.DefaultListModel;
 
 public class SortedHedspiObjectsListModel<T extends HedspiObject> extends
@@ -38,6 +40,13 @@ public class SortedHedspiObjectsListModel<T extends HedspiObject> extends
 		super.removeAllElements();
 		for (T it : sortedList)
 			super.addElement(it);
+	}
+
+	@Override
+	public void addObjects(Collection<T> arr) {
+		for(T it : arr)
+			sortedList.add(it);
+		updateModel();
 	}
 
 }

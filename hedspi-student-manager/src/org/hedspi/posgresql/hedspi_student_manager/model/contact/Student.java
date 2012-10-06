@@ -3,6 +3,7 @@ package org.hedspi.posgresql.hedspi_student_manager.model.contact;
 import org.hedspi.posgresql.hedspi_student_manager.model.academic.HedspiClass;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
+import org.hedspi.posgresql.hedspi_student_manager.util.HedspiUtil;
 
 public class Student extends HedspiObject {
 
@@ -11,6 +12,8 @@ public class Student extends HedspiObject {
 	public static final String ENROLL_YEAR_CODE = "EnrollYear";
 
 	public static HedspiObjects<Student> getStudents() {
+		if (students == null)
+			students = new HedspiObjects<>();
 		return students;
 	}
 
@@ -87,6 +90,17 @@ public class Student extends HedspiObject {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	public String getInsertQuery() {
+		return String.format("insert into \"Student\" (\"EnrollPoint\", \"EnrollYear\", \"CT#\", \"CL#\", \"MSSV\") " +
+				"values(%s, %s, %s, %s, '%s')",
+				HedspiUtil.quoteConvert(String.valueOf(getEnrollPoint())),
+				HedspiUtil.quoteConvert(String.valueOf(getEnrollYear())),
+				HedspiUtil.quoteConvert(super.getId()),
+				HedspiUtil.quoteConvert(getMyClass().getId()),
+				HedspiUtil.quoteConvert(getMssv())
+				);
 	}
 
 }
