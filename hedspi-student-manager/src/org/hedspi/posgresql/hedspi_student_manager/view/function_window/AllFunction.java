@@ -7,7 +7,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -23,6 +22,7 @@ import org.hedspi.posgresql.hedspi_student_manager.view.IView;
 import org.hedspi.posgresql.hedspi_student_manager.view.contact.address.AddressPanel;
 import org.hedspi.posgresql.hedspi_student_manager.view.help.about.AboutBox;
 import org.hedspi.posgresql.hedspi_student_manager.view.student.StudentPanel;
+import javax.swing.JMenuItem;
 
 public class AllFunction extends JFrame implements IView {
 
@@ -62,18 +62,23 @@ public class AllFunction extends JFrame implements IView {
 
 		JMenu mnOperation = new JMenu("Operation");
 		menuBar.add(mnOperation);
+		
+		JMenuItem mntmCommit = new JMenuItem("Commit");
+		mnOperation.add(mntmCommit);
+		
+		JMenuItem mntmReload = new JMenuItem("Reload");
+		mnOperation.add(mntmReload);
 
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
-
-		JButton btnAbout = new JButton("About");
-		btnAbout.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
+		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mntmAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				(new AboutBox(getFrame())).setVisible(true);
 			}
 		});
-		mnHelp.add(btnAbout);
+		mnHelp.add(mntmAbout);
 		contentPaneMain = new JPanel();
 		contentPaneMain.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPaneMain.setLayout(new BorderLayout(0, 0));
