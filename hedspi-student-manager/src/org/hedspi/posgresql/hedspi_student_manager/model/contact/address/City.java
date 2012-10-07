@@ -1,8 +1,12 @@
 package org.hedspi.posgresql.hedspi_student_manager.model.contact.address;
 
+import java.util.logging.Level;
+
+import org.hedspi.posgresql.hedspi_student_manager.control.Control;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 import org.hedspi.posgresql.hedspi_student_manager.util.HedspiUtil;
+import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectListIntegrator;
 
 public class City extends HedspiObject {
 
@@ -63,6 +67,27 @@ public class City extends HedspiObject {
 
 	public String getInsertQuery() {
 		return String.format("insert into\"City\" (\"CY#\", \"Name\") values(%s, '%s')", HedspiUtil.quoteConvert(super.getId()), HedspiUtil.quoteConvert(getName()));
+	}
+
+	public static IObjectListIntegrator<City> getCityGenner() {
+		return new IObjectListIntegrator<City>() {
+			
+			@Override
+			public boolean isRemovable(City object) {
+				return object.getDistricts().isEmpty();
+			}
+			
+			@Override
+			public City getNewObject() {
+				return new City(getCities().getNewId(), "No name");
+			}
+			
+			@Override
+			public void beforeRemove(City object) {
+				if (!object.getDistricts().isEmpty())
+					Control.getInstance().getLogger().log(Level.SEVERE, "Deleting city that still contains districts could make unhandled errors");
+			}
+		};
 	}
 
 }

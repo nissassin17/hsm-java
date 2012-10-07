@@ -3,6 +3,8 @@ package org.hedspi.posgresql.hedspi_student_manager.model.hedspi;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.hedspi.posgresql.hedspi_student_manager.model.contact.address.District;
+
 public class HedspiObjects<T extends HedspiObject> extends HashMap<String, T> {
 
 	public void putAll(HedspiObjects<T> m) {
@@ -105,5 +107,17 @@ public class HedspiObjects<T extends HedspiObject> extends HashMap<String, T> {
 			for (IObjectsContainer<T> it : objectsContainersList)
 				it.removeObject(obj);
 		return obj;
+	}
+
+	public String getNewId() {
+		for(int i = 0; true; i++)
+			if (!super.containsKey(String.valueOf(i)))
+					return String.valueOf(i);
+	}
+
+	public T getDefaultValue() {
+		for(T it : super.values())
+			return it;
+		return null;
 	}
 }

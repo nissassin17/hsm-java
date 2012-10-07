@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JComboBox;
@@ -15,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.SpinnerDateModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -195,7 +193,7 @@ public class ContactPane extends JPanel {
 				JComboBox<City> cities = (JComboBox<City>) arg0.getSource();
 				City currentCity = cities.getItemAt(cities.getSelectedIndex());
 				if (currentCity != null)
-				setCity(currentCity);
+					setCity(currentCity);
 			}
 
 		});
@@ -243,9 +241,7 @@ public class ContactPane extends JPanel {
 				object.setDob(value);
 			}
 		});
-		spinnerDob = new JSpinner();
-		spinnerDob.setModel(new SpinnerDateModel(new Date(1349197200000L),
-				null, null, Calendar.DAY_OF_YEAR));
+		spinnerDob = oaSpinnerDob.getSpinner();
 		add(spinnerDob, "4, 11");
 		add(label_9, "3, 13, left, top");
 		add(label_7, "3, 15, left, center");

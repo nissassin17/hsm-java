@@ -4,12 +4,16 @@ import org.hedspi.posgresql.hedspi_student_manager.model.academic.HedspiClass;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 import org.hedspi.posgresql.hedspi_student_manager.util.HedspiUtil;
+import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectListIntegrator;
 
 public class Student extends HedspiObject {
 
 	public static final String ID_CODE = "ST#";
 	public static final String ENROLL_POINT_CODE = "EnrollPoint";
 	public static final String ENROLL_YEAR_CODE = "EnrollYear";
+	protected static final double DEFAULT_ENROLLPOINT = 0;
+	protected static final int DEFAULT_ENROLLYEAR = 2010;
+	protected static final String DEFAULT_MSSV = "";
 
 	public static HedspiObjects<Student> getStudents() {
 		if (students == null)
@@ -101,6 +105,31 @@ public class Student extends HedspiObject {
 				HedspiUtil.quoteConvert(getMyClass().getId()),
 				HedspiUtil.quoteConvert(getMssv())
 				);
+	}
+
+	public static IObjectListIntegrator<Student> getStudentGenner() {
+		return new IObjectListIntegrator<Student>() {
+			
+			@Override
+			public boolean isRemovable(Student object) {
+				return true;
+			}
+			
+			@Override
+			public Student getNewObject() {
+				return new Student(getStudents().getNewId(), 
+						Contact.getNewContact(), 
+						DEFAULT_ENROLLPOINT, 
+						DEFAULT_ENROLLYEAR, 
+						HedspiClass.getClasses().getDefaultValue(), 
+						DEFAULT_MSSV);
+			}
+			
+			@Override
+			public void beforeRemove(Student object) {
+				object.getMyClass().getStudents().remove(this);
+			}
+		};
 	}
 
 }

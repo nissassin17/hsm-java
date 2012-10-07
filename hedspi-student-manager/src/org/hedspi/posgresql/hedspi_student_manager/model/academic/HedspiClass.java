@@ -1,10 +1,14 @@
 package org.hedspi.posgresql.hedspi_student_manager.model.academic;
 
+import java.util.logging.Level;
+
+import org.hedspi.posgresql.hedspi_student_manager.control.Control;
 import org.hedspi.posgresql.hedspi_student_manager.model.contact.Lecturer;
 import org.hedspi.posgresql.hedspi_student_manager.model.contact.Student;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 import org.hedspi.posgresql.hedspi_student_manager.util.HedspiUtil;
+import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectListIntegrator;
 
 public class HedspiClass extends HedspiObject {
 
@@ -71,5 +75,26 @@ public class HedspiClass extends HedspiObject {
 		return String.format("insert into \"Class\" (\"CL#\", \"Name\") values (%s, '%s')",
 				HedspiUtil.quoteConvert(super.getId()),
 				HedspiUtil.quoteConvert(getName()));
+	}
+
+	public static IObjectListIntegrator<HedspiClass> getClassGenner() {
+		return new IObjectListIntegrator<HedspiClass>() {
+			
+			@Override
+			public boolean isRemovable(HedspiClass object) {
+				return object.getStudents().isEmpty();
+			}
+			
+			@Override
+			public HedspiClass getNewObject() {
+				return new HedspiClass(getClasses().getNewId(), "No name");
+			}
+			
+			@Override
+			public void beforeRemove(HedspiClass object) {
+				if (!object.getStudents().isEmpty())
+					Control.getInstance().getLogger().log(Level.SEVERE, "Deleting class that still contains students could make future unhandled errors");
+			}
+		};
 	}
 }

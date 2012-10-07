@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -71,8 +71,10 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String val = textField.getText();
-				hedspiObject.put(getNewElement(val));
+				T newEl = getNewElement(val);
+				hedspiObject.put(newEl);
 				textField.setText("");
+				list.setSelectedValue(newEl, true);
 			}
 		});
 		add(btnAdd, "cell 1 0,growx,aligny center");
@@ -105,9 +107,12 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 		btnRemove.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<T> arr = (ArrayList<T>) list.getSelectedValuesList();
+				List<T> arr =  list.getSelectedValuesList();
 				for (T it : arr)
 					hedspiObject.removeObject(it);
+				T defaultValue = hedspiObject.getDefaultValue();
+				if (defaultValue != null)
+					list.setSelectedValue(defaultValue, true);
 			}
 		});
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] {

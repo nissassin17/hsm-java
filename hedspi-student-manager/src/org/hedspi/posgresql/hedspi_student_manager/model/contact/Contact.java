@@ -173,4 +173,21 @@ public class Contact extends HedspiObject {
 				);
 	}
 
+	public static Contact getNewContact() {
+		Contact contact = new Contact(
+				getContacts().getNewId(), 
+				"",
+				new NewLineListManipulator(""),
+				new NewLineListManipulator(""),
+				new Date(),
+				true,
+				"No",
+				"Name", 
+				new NewLineListManipulator(""), 
+				"",
+				District.getDistricts().getDefaultValue());
+		getContacts().put(contact);
+		return contact;
+	}
+
 }

@@ -26,7 +26,8 @@ public class AddressPanel extends JSplitPane {
 		setLeftComponent(scrollPane);
 
 		ObjectListPanel<City> panel_1 = new ObjectListPanel<City>(panel,
-				City.getCities());
+				City.getCities(),
+				City.getCityGenner());
 		scrollPane.setViewportView(panel_1);
 
 		JScrollPane scrollPane_1 = new JScrollPane();

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class OADateSpinner<T> extends OAComponentAbstract<Date, T> {
 
@@ -18,6 +20,13 @@ public class OADateSpinner<T> extends OAComponentAbstract<Date, T> {
 		super(objectUpdater, object);
 		model = new SpinnerDateModel();
 		spinner = new JSpinner(model);
+		model.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				updateObjectValue();
+			}
+		});
 	}
 
 	public JSpinner getSpinner() {
