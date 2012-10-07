@@ -22,32 +22,25 @@ public class HedspiObjects<T extends HedspiObject> extends HashMap<String, T> {
 	private ArrayList<IObjectsContainer<T>> objectsContainersList;
 
 	private SortedHedspiObjectsComboModel<T> comboBoxModel;
+	private SortedHedspiObjectsComboModel<T> comboBoxModel2;
+	public SortedHedspiObjectsComboModel<T> getComboBoxModel2() {
+		if (comboBoxModel2 == null){
+			comboBoxModel2 = new SortedHedspiObjectsComboModel<>();
+			registerObjectsContainer(comboBoxModel2);
+		}
+		return comboBoxModel2;
+	}
 
-	// public ArrayList<T> getSortedList(){
-	// ArrayList<T> arr = new ArrayList<>();
-	// for(T it : super.values())
-	// arr.add(it);
-	// Collections.sort(arr, new Comparator<T>(){
-	//
-	// @Override
-	// public int compare(T arg0, T arg1) {
-	// return arg0.toString().compareTo(arg1.toString());
-	// }});
-	// return arr;
-	// }
-	// public ArrayList<T> getSortedListIgnoreCase(){
-	// ArrayList<T> arr = new ArrayList<>();
-	// for(T it : super.values())
-	// arr.add(it);
-	// Collections.sort(arr, new Comparator<T>(){
-	//
-	// @Override
-	// public int compare(T arg0, T arg1) {
-	// return arg0.toString().compareToIgnoreCase(arg1.toString());
-	// }});
-	// return arr;
-	// }
 	private SortedHedspiObjectsListModel<T> listModel;
+	private SortedHedspiObjectsListModel<T> listModel2;
+
+	public SortedHedspiObjectsListModel<T> getListModel2() {
+		if (listModel2 == null){
+			listModel2 = new SortedHedspiObjectsListModel<>();
+			registerObjectsContainer(listModel2);
+		}
+		return listModel2;
+	}
 
 	public HedspiObjects() {
 		super();

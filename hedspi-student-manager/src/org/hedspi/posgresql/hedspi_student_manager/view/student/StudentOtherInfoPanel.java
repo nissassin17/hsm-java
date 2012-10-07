@@ -94,7 +94,7 @@ public class StudentOtherInfoPanel extends JPanel {
 					}
 				});
 		comboBoxClass = oaComboBox.getComboBox();
-		comboBoxClass.setModel(HedspiClass.getClasses().getComboBoxModel());
+		comboBoxClass.setModel(HedspiClass.getClasses().getComboBoxModel2());
 
 		add(comboBoxClass, "4, 4, fill, default");
 
@@ -157,5 +157,4 @@ public class StudentOtherInfoPanel extends JPanel {
 		oaEnrollPoint.setObject(obj);
 		oaComboBox.setObject(obj);
 	}
-
 }
