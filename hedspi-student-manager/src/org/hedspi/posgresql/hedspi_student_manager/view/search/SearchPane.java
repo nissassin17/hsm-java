@@ -250,18 +250,18 @@ public class SearchPane extends JPanel {
 				new Object[][] {
 				},
 				new String[] {
-					"Type", "Value", "String"
+					"Ord", "Type", "Value", "String"
 				}
 			) {
 				private static final long serialVersionUID = 1L;
 				Class<?>[] columnTypes = new Class[] {
-					String.class, Object.class, String.class
+					int.class, String.class, Object.class, String.class
 				};
 				public Class<?> getColumnClass(int columnIndex) {
 					return columnTypes[columnIndex];
 				}
 				boolean[] columnEditables = new boolean[] {
-					false, false, false
+					false, false, false, false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -312,9 +312,10 @@ public class SearchPane extends JPanel {
 				HedspiObject[] rets = searchContainer.search(textField.getText(), model.getNumber().intValue(), chckbxCaseSensitive.isSelected());
 				for(int i = resultModel.getRowCount() - 1; i >= 0; i--)
 					resultModel.removeRow(i);
+				int cnt = 1;
 				for(HedspiObject it : rets){
 					resultModel.addRow(new Object[]{
-							it.getClassName(), it, it.getSearchString()});
+							cnt++, it.getClassName(), it, it.getSearchString()});
 				}
 			}
 		});
@@ -326,6 +327,9 @@ public class SearchPane extends JPanel {
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(resultModel);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(45);
+		table.getColumnModel().getColumn(0).setMaxWidth(100);
 		scrollPane.setViewportView(table);
 	}
 	private static void addPopup(Component component, final JPopupMenu popup) {

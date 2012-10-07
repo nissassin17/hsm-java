@@ -1,6 +1,5 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.contact.address;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -10,6 +9,8 @@ import org.hedspi.posgresql.hedspi_student_manager.model.contact.address.Distric
 import org.hedspi.posgresql.hedspi_student_manager.view.util.list.DistrictListEditor;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectViewPanel;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.list.ListEditor;
+import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.IObjectUpdater;
+import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OATextField;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import com.jgoodies.forms.factories.FormFactory;
@@ -23,8 +24,8 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField_1;
-	private City city;
 	private ListEditor<District> panel;
+	private OATextField<City> oaName;
 
 	/**
 	 * Create the panel.
@@ -40,24 +41,33 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "2, 2, fill, fill");
-		panel_1.setLayout(new FormLayout(
-				new ColumnSpec[] { ColumnSpec.decode("56px"),
-						FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-						ColumnSpec.decode("86px:grow"),
-						FormFactory.RELATED_GAP_COLSPEC,
-						FormFactory.DEFAULT_COLSPEC, }, new RowSpec[] {
-						FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), }));
+		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("70px"),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("86px:grow"),},
+			new RowSpec[] {
+				FormFactory.LINE_GAP_ROWSPEC,
+				RowSpec.decode("20px"),}));
 
 		JLabel lblName = DefaultComponentFactory.getInstance().createLabel(
 				"City name");
 		panel_1.add(lblName, "1, 2, left, center");
 
-		textField_1 = new JTextField();
+		oaName = new OATextField<City>(new IObjectUpdater<City, String>() {
+
+			@Override
+			public String getValue(City object) {
+				return object.getName();
+			}
+
+			@Override
+			public void setValue(City object, String value) {
+				object.setName(value);
+			}
+		});
+		textField_1 = oaName.getTextField();
 		panel_1.add(textField_1, "3, 2, fill, top");
 		textField_1.setColumns(10);
-
-		JButton btnSave = new JButton("Save");
-		panel_1.add(btnSave, "5, 2");
 
 		JLabel lblDistrictList = DefaultComponentFactory.getInstance()
 				.createLabel("Districts list");
@@ -67,22 +77,9 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 		add(panel, "2, 6, fill, fill");
 	}
 
-	public City getCity() {
-		return city;
-	}
-
-	protected ListEditor<District> getPanel_3() {
-		return panel;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-		textField_1.setText(city.getName());
-		getPanel_3().setHedspiObject(city.getDistricts());
-	}
-
 	@Override
 	public void setObject(City obj) {
-		setCity(obj);
+		panel.setHedspiObject(obj.getDistricts());
+		oaName.setObject(obj);
 	}
 }
