@@ -52,6 +52,7 @@ public class ImagePanel extends JPanel {
 			return;
 		}
 	}
+
 	@Override
 	public void paint(Graphics g) {
 		if (image != null)

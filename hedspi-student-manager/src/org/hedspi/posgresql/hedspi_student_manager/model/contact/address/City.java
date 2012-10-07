@@ -67,36 +67,46 @@ public class City extends HedspiObject {
 	}
 
 	public String getInsertQuery() {
-		return String.format("insert into\"City\" (\"CY#\", \"Name\") values(%s, '%s')", HedspiUtil.quoteConvert(super.getId()), HedspiUtil.quoteConvert(getName()));
+		return String.format(
+				"insert into\"City\" (\"CY#\", \"Name\") values(%s, '%s')",
+				HedspiUtil.quoteConvert(super.getId()),
+				HedspiUtil.quoteConvert(getName()));
 	}
 
 	public static IObjectListIntegrator<City> getCityGenner() {
 		return new IObjectListIntegrator<City>() {
-			
+
 			@Override
 			public boolean isRemovable(City object) {
 				if (!object.getDistricts().isEmpty())
 					return false;
 				return getCities().size() > 1;
 			}
-			
+
 			@Override
 			public City getNewObject() {
 				return new City(getCities().getNewId(), "No name");
 			}
-			
+
 			@Override
 			public void beforeRemove(City object) {
 				if (!object.getDistricts().isEmpty())
-					Control.getInstance().getLogger().log(Level.SEVERE, "Deleting city that still contains districts could make unhandled errors");
+					Control.getInstance()
+							.getLogger()
+							.log(Level.SEVERE,
+									"Deleting city that still contains districts could make unhandled errors");
 				if (getCities().size() <= 1)
-					Control.getInstance().getLogger().log(Level.SEVERE, "Delete last class. Create at least one itermidiately to avoid potential errors");
+					Control.getInstance()
+							.getLogger()
+							.log(Level.SEVERE,
+									"Delete last class. Create at least one itermidiately to avoid potential errors");
 			}
 		};
 	}
 
 	private static boolean isSearchName = true;
 	private static boolean isSearchDistricts = true;
+
 	public static void setSearchStringArg(boolean selected, boolean selected2) {
 		isSearchName = selected;
 		isSearchDistricts = selected2;
@@ -107,9 +117,9 @@ public class City extends HedspiObject {
 		String ret = "";
 		if (isSearchName)
 			ret = getName();
-		if (isSearchDistricts){
+		if (isSearchDistricts) {
 			ret += "\n";
-			for(District it : getDistricts().values())
+			for (District it : getDistricts().values())
 				ret += it.getName() + ", ";
 		}
 		return ret;

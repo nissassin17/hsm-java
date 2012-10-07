@@ -67,6 +67,7 @@ public class ContactPane extends JPanel {
 	private Contact contact;
 	private OAToggleButton<Contact> oaToggleButtonSex;
 	private OADateSpinner<Contact> oaSpinnerDob;
+
 	/**
 	 * Create the panel.
 	 */
@@ -108,20 +109,21 @@ public class ContactPane extends JPanel {
 		comboBoxDistrict = oaDistrict.getComboBox();
 		comboBoxDistrict.setModel(districtModel);
 
-		oaToggleButtonSex = new OAToggleButton<Contact>(new IObjectUpdater<Contact, String>() {
+		oaToggleButtonSex = new OAToggleButton<Contact>(
+				new IObjectUpdater<Contact, String>() {
 
-			@Override
-			public String getValue(Contact object) {
-				if (object.isMan())
-					return OAToggleButton.FALSE;
-				return OAToggleButton.TRUE;
-			}
+					@Override
+					public String getValue(Contact object) {
+						if (object.isMan())
+							return OAToggleButton.FALSE;
+						return OAToggleButton.TRUE;
+					}
 
-			@Override
-			public void setValue(Contact object, String value) {
-				object.setMan(value.equals(OAToggleButton.FALSE));
-			}
-		});
+					@Override
+					public void setValue(Contact object, String value) {
+						object.setMan(value.equals(OAToggleButton.FALSE));
+					}
+				});
 		toggleButtonSex = oaToggleButtonSex.getToggleButton();
 		toggleButtonSex.setText("Male");
 		toggleButtonSex.addItemListener(new ItemListener() {
@@ -229,18 +231,19 @@ public class ContactPane extends JPanel {
 		add(toggleButtonSex, "4, 9, left, top");
 		add(label_5, "3, 11, left, center");
 
-		oaSpinnerDob = new OADateSpinner<Contact>(new IObjectUpdater<Contact, Date>() {
+		oaSpinnerDob = new OADateSpinner<Contact>(
+				new IObjectUpdater<Contact, Date>() {
 
-			@Override
-			public Date getValue(Contact object) {
-				return object.getDob();
-			}
+					@Override
+					public Date getValue(Contact object) {
+						return object.getDob();
+					}
 
-			@Override
-			public void setValue(Contact object, Date value) {
-				object.setDob(value);
-			}
-		});
+					@Override
+					public void setValue(Contact object, Date value) {
+						object.setDob(value);
+					}
+				});
 		spinnerDob = oaSpinnerDob.getSpinner();
 		add(spinnerDob, "4, 11");
 		add(label_9, "3, 13, left, top");
@@ -289,15 +292,19 @@ public class ContactPane extends JPanel {
 		add(editorPanelNote, "4, 23, fill, fill");
 
 	}
+
 	protected JComboBox<District> getComboBox() {
 		return comboBoxDistrict;
 	}
+
 	protected JComboBox<City> getComboBox_1() {
 		return comboBoxCity;
 	}
+
 	public Contact getContact() {
 		return contact;
 	}
+
 	public DefaultListEditor getListEmail() {
 		return listEmail;
 	}

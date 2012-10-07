@@ -37,18 +37,23 @@ public class Course extends HedspiObject {
 	public ArrayList<Course> getBackground() {
 		return background;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public int getnCredits() {
 		return nCredits;
 	}
+
 	public double getnFees() {
 		return nFees;
 	}
+
 	public double getTimes() {
 		return times;
 	}
+
 	public String getTopic() {
 		return topic;
 	}

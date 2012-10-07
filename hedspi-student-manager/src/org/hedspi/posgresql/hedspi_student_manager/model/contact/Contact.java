@@ -98,30 +98,39 @@ public class Contact extends HedspiObject {
 	public String getLastName() {
 		return lastName;
 	}
+
 	public String getName() {
 		return getFirstName() + " " + getLastName();
 	}
+
 	public String getNote() {
 		return note;
 	}
+
 	public NewLineListManipulator getPhone() {
 		return phone;
 	}
+
 	public boolean isMan() {
 		return isMan;
 	}
+
 	public void setDistrict(District district) {
 		this.district = district;
 	}
+
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+
 	public void setEmail(NewLineListManipulator email) {
 		this.email = email;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public void setHome(String home) {
 		this.home = home;
 	}
@@ -157,36 +166,27 @@ public class Contact extends HedspiObject {
 	}
 
 	public String getInsertQuery() {
-		return String.format(
-				"insert into \"Contact\" (\"FirstName\", \"LastName\", \"Sex\", \"DOB\", \"Email\", \"Phone\", \"ImageUrl\", \"Notes\", \"Home\", \"CT#\", \"DT#\")" +
-				"values('%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', '%s', %s, %s)",
-				HedspiUtil.quoteConvert(getFirstName()),
-				HedspiUtil.quoteConvert(getLastName()),
-				HedspiUtil.quoteConvert(isMan() ? "true" : "false"),
-				HedspiUtil.quoteConvert(getDob().toString()),
-				HedspiUtil.quoteConvert(getEmail().toString()),
-				HedspiUtil.quoteConvert(getPhone().toString()),
-				HedspiUtil.quoteConvert(getImage().toString()),
-				HedspiUtil.quoteConvert(getNote()),
-				HedspiUtil.quoteConvert(getHome()),
-				HedspiUtil.quoteConvert(getId()),
-				HedspiUtil.quoteConvert(getDistrict().getId())
-				);
+		return String
+				.format("insert into \"Contact\" (\"FirstName\", \"LastName\", \"Sex\", \"DOB\", \"Email\", \"Phone\", \"ImageUrl\", \"Notes\", \"Home\", \"CT#\", \"DT#\")"
+						+ "values('%s', '%s', %s, '%s', '%s', '%s', '%s', '%s', '%s', %s, %s)",
+						HedspiUtil.quoteConvert(getFirstName()),
+						HedspiUtil.quoteConvert(getLastName()),
+						HedspiUtil.quoteConvert(isMan() ? "true" : "false"),
+						HedspiUtil.quoteConvert(getDob().toString()),
+						HedspiUtil.quoteConvert(getEmail().toString()),
+						HedspiUtil.quoteConvert(getPhone().toString()),
+						HedspiUtil.quoteConvert(getImage().toString()),
+						HedspiUtil.quoteConvert(getNote()),
+						HedspiUtil.quoteConvert(getHome()),
+						HedspiUtil.quoteConvert(getId()),
+						HedspiUtil.quoteConvert(getDistrict().getId()));
 	}
 
 	public static Contact getNewContact() {
-		Contact contact = new Contact(
-				getContacts().getNewId(), 
-				"",
-				new NewLineListManipulator(""),
-				new NewLineListManipulator(""),
-				new Date(),
-				true,
-				"No",
-				"Name", 
-				new NewLineListManipulator(""), 
-				"",
-				District.getDistricts().getDefaultValue());
+		Contact contact = new Contact(getContacts().getNewId(), "",
+				new NewLineListManipulator(""), new NewLineListManipulator(""),
+				new Date(), true, "No", "Name", new NewLineListManipulator(""),
+				"", District.getDistricts().getDefaultValue());
 		getContacts().put(contact);
 		return contact;
 	}
@@ -196,11 +196,12 @@ public class Contact extends HedspiObject {
 			boolean isSearchImageUrls, boolean isSearchName,
 			boolean isSearchNote, boolean isSearchPhone) {
 		String ret = "";
-		
+
 		if (isSearchName)
 			ret += getName();
 		if (isSearchAddress)
-			ret += " " + getHome() + " " + getDistrict().getName() + getDistrict().getCity().getName();
+			ret += " " + getHome() + " " + getDistrict().getName()
+					+ getDistrict().getCity().getName();
 		if (isSearchEmail)
 			ret += " " + getEmail().getEndlnString().replace("\n", " ");
 		if (isSearchBirthday)
@@ -210,8 +211,8 @@ public class Contact extends HedspiObject {
 		if (isSearchPhone)
 			ret += " " + getPhone().getEndlnString().replace("\n", " ");
 		if (isSearchImageUrls)
-			ret += " " + getImage().getEndlnString().replace("\n",  " ");
-		
+			ret += " " + getImage().getEndlnString().replace("\n", " ");
+
 		return ret;
 	}
 

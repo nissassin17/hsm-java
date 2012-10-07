@@ -28,11 +28,6 @@ public class District extends HedspiObject {
 	public District(String id) {
 		super(id);
 	}
-	public District(String id, City myCity, String name) {
-		super(id);
-		this.city = myCity;
-		this.name = name;
-	}
 
 	public District(String id, String name, City myCity) {
 		super(id);
@@ -44,20 +39,12 @@ public class District extends HedspiObject {
 		return city;
 	}
 
-	public City getMyCity() {
-		return city;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setCity(City city) {
 		this.city = city;
-	}
-
-	public void setMyCity(City myCity) {
-		this.city = myCity;
 	}
 
 	public void setName(String name) {
@@ -70,27 +57,31 @@ public class District extends HedspiObject {
 	}
 
 	public String getInsertQuery() {
-		return String.format("insert into \"District\" (\"DT#\", \"CY#\", \"Name\") values(%s, %s,'%s')",
-				HedspiUtil.quoteConvert(super.getId()),
-				HedspiUtil.quoteConvert(getCity().getId()),
-				HedspiUtil.quoteConvert(getName()));
+		return String
+				.format("insert into \"District\" (\"DT#\", \"CY#\", \"Name\") values(%s, %s,'%s')",
+						HedspiUtil.quoteConvert(super.getId()),
+						HedspiUtil.quoteConvert(getCity().getId()),
+						HedspiUtil.quoteConvert(getName()));
 	}
-	
+
 	private static boolean isSearchName;
 	private static boolean isSearchCity;
-	public static void setSearchStringArg(boolean isSearchName, boolean isSearchCity){
+
+	public static void setSearchStringArg(boolean isSearchName,
+			boolean isSearchCity) {
 		District.isSearchCity = isSearchCity;
 		District.isSearchName = isSearchName;
 	}
+
 	@Override
 	public String getSearchString() {
 		String ret = "";
-		
+
 		if (isSearchName)
 			ret = getName();
 		if (isSearchCity)
 			ret += " " + getCity().getName();
-		
+
 		return ret;
 	}
 

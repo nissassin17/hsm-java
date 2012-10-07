@@ -1,7 +1,6 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.util.list;
 
 import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
-import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
 public class DefaultListEditor extends ListEditor<HedspiObject> {
 
@@ -14,13 +13,17 @@ public class DefaultListEditor extends ListEditor<HedspiObject> {
 		super();
 	}
 
-	public DefaultListEditor(HedspiObjects<HedspiObject> hedspiObjectArg) {
-		super(hedspiObjectArg);
-	}
-
 	@Override
-	public HedspiObject getNewElement(String val) {
+	public HedspiObject getNewObject(String val) {
 		return new HedspiObject(val);
 	}
 
+	@Override
+	public boolean isRemovable(HedspiObject object) {
+		return true;
+	}
+
+	@Override
+	public void beforeRemove(HedspiObject object) {
+	}
 }

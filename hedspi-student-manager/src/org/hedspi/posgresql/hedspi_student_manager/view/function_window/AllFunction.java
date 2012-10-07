@@ -8,11 +8,12 @@ import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
@@ -24,11 +25,6 @@ import org.hedspi.posgresql.hedspi_student_manager.view.contact.address.AddressP
 import org.hedspi.posgresql.hedspi_student_manager.view.help.about.AboutBox;
 import org.hedspi.posgresql.hedspi_student_manager.view.search.SearchPane;
 import org.hedspi.posgresql.hedspi_student_manager.view.student.StudentPanel;
-import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 
 public class AllFunction extends JFrame implements IView {
 
@@ -68,7 +64,7 @@ public class AllFunction extends JFrame implements IView {
 
 		JMenu mnOperation = new JMenu("Operation");
 		menuBar.add(mnOperation);
-		
+
 		JMenuItem mntmCommit = new JMenuItem("Commit");
 		mntmCommit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -76,7 +72,7 @@ public class AllFunction extends JFrame implements IView {
 			}
 		});
 		mnOperation.add(mntmCommit);
-		
+
 		JMenuItem mntmReload = new JMenuItem("Reload");
 		mntmReload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -87,7 +83,7 @@ public class AllFunction extends JFrame implements IView {
 
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
-		
+
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -111,10 +107,10 @@ public class AllFunction extends JFrame implements IView {
 
 		org.hedspi.posgresql.hedspi_student_manager.view.classview.ClassPanel splitPane = new org.hedspi.posgresql.hedspi_student_manager.view.classview.ClassPanel();
 		tabbedPaneAll.addTab("Class", null, splitPane, null);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		tabbedPaneAll.addTab("Search", null, scrollPane, null);
-		
+
 		SearchPane searchPanel = new SearchPane();
 		scrollPane.setViewportView(searchPanel);
 	}
@@ -128,15 +124,19 @@ public class AllFunction extends JFrame implements IView {
 		case "repaint":
 			super.revalidate();
 			super.repaint();
-			Control.getInstance().getLogger().log(Level.INFO, "UI repainted ok");
-			JOptionPane.showMessageDialog(this, "Reload database ok!", "Reload ok", JOptionPane.INFORMATION_MESSAGE);
+			Control.getInstance().getLogger()
+					.log(Level.INFO, "UI repainted ok");
+			JOptionPane.showMessageDialog(this, "Reload database ok!",
+					"Reload ok", JOptionPane.INFORMATION_MESSAGE);
 			break;
-			
+
 		case "commitResult":
-			if ((boolean)data[0])
-				JOptionPane.showMessageDialog(this, "Commit done", "Commit done", JOptionPane.INFORMATION_MESSAGE);
+			if ((boolean) data[0])
+				JOptionPane.showMessageDialog(this, "Commit done",
+						"Commit done", JOptionPane.INFORMATION_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(this, "Commit failed", "Commit failed", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Commit failed",
+						"Commit failed", JOptionPane.ERROR_MESSAGE);
 			break;
 
 		default:

@@ -59,6 +59,7 @@ public class HedspiClass extends HedspiObject {
 	public void setLecturer(Lecturer lecturer) {
 		this.lecturer = lecturer;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -73,39 +74,48 @@ public class HedspiClass extends HedspiObject {
 	}
 
 	public String getInsertQuery() {
-		return String.format("insert into \"Class\" (\"CL#\", \"Name\") values (%s, '%s')",
+		return String.format(
+				"insert into \"Class\" (\"CL#\", \"Name\") values (%s, '%s')",
 				HedspiUtil.quoteConvert(super.getId()),
 				HedspiUtil.quoteConvert(getName()));
 	}
 
 	public static IObjectListIntegrator<HedspiClass> getClassGenner() {
 		return new IObjectListIntegrator<HedspiClass>() {
-			
+
 			@Override
 			public boolean isRemovable(HedspiClass object) {
 				if (!object.getStudents().isEmpty())
 					return false;
 				return getClasses().size() > 1;
 			}
-			
+
 			@Override
 			public HedspiClass getNewObject() {
 				return new HedspiClass(getClasses().getNewId(), "No name");
 			}
-			
+
 			@Override
 			public void beforeRemove(HedspiClass object) {
 				if (!object.getStudents().isEmpty())
-					Control.getInstance().getLogger().log(Level.SEVERE, "Deleting class that still contains students could make future unhandled errors");
+					Control.getInstance()
+							.getLogger()
+							.log(Level.SEVERE,
+									"Deleting class that still contains students could make future unhandled errors");
 				if (getClasses().size() <= 1)
-					Control.getInstance().getLogger().log(Level.SEVERE, "Delete last class. Create at least one itermidiately to avoid potential errors");
+					Control.getInstance()
+							.getLogger()
+							.log(Level.SEVERE,
+									"Delete last class. Create at least one itermidiately to avoid potential errors");
 			}
 		};
 	}
 
 	private static boolean isSearchName;
 	private static boolean isSearchStudents;
-	public static void setSearchStringArg(boolean isSearchName, boolean isSearchStudents) {
+
+	public static void setSearchStringArg(boolean isSearchName,
+			boolean isSearchStudents) {
 		HedspiClass.isSearchStudents = isSearchStudents;
 		HedspiClass.isSearchName = isSearchName;
 	}
@@ -116,7 +126,7 @@ public class HedspiClass extends HedspiObject {
 		if (isSearchName)
 			ret = getName();
 		if (isSearchStudents)
-			for(Student it : getStudents().values())
+			for (Student it : getStudents().values())
 				ret += " " + it.getName();
 		return ret;
 	}

@@ -44,7 +44,7 @@ public class SortedHedspiObjectsListModel<T extends HedspiObject> extends
 
 	@Override
 	public void addObjects(Collection<T> arr) {
-		for(T it : arr)
+		for (T it : arr)
 			sortedList.add(it);
 		updateModel();
 	}

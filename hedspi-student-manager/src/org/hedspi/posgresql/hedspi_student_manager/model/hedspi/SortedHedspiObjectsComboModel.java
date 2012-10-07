@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import javax.swing.DefaultComboBoxModel;
 
-public class SortedHedspiObjectsComboModel<T extends HedspiObject>
-		extends DefaultComboBoxModel<T> implements IObjectsContainer<T> {
+public class SortedHedspiObjectsComboModel<T extends HedspiObject> extends
+		DefaultComboBoxModel<T> implements IObjectsContainer<T> {
 
 	/**
 	 * 
@@ -44,7 +44,7 @@ public class SortedHedspiObjectsComboModel<T extends HedspiObject>
 
 	@Override
 	public void addObjects(Collection<T> arr) {
-		for(T it : arr)
+		for (T it : arr)
 			sortedList.add(it);
 		updateModel();
 	}

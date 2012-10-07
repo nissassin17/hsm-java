@@ -50,8 +50,8 @@ public class HedspiObject implements Comparable<Object> {
 	public String toString() {
 		return id;
 	}
-	
-	public String getSearchString(){
+
+	public String getSearchString() {
 		return toString();
 	}
 

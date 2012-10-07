@@ -58,18 +58,23 @@ public class RunningClass {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+
 	public void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
+
 	public void setLecturer(Lecturer lecturer) {
 		this.lecturer = lecturer;
 	}
+
 	public void setResult(String result) {
 		this.result = result;
 	}
+
 	public void setRoom(Room room) {
 		this.room = room;
 	}
+
 	public void setStudents(ArrayList<Student> students) {
 		this.students = students;
 	}

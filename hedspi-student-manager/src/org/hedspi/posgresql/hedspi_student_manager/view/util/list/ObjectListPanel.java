@@ -38,7 +38,8 @@ public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 	 * Create the panel.
 	 */
 	public ObjectListPanel(IObjectViewPanel<T> viewPanelArg,
-			HedspiObjects<T> hedspiObjectArg, IObjectListIntegrator<T> integratorArg) {
+			HedspiObjects<T> hedspiObjectArg,
+			IObjectListIntegrator<T> integratorArg) {
 		this.integrator = integratorArg;
 		this.hedspiObjects = hedspiObjectArg;
 		this.viewPanel = viewPanelArg;
@@ -82,8 +83,10 @@ public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				T newObject = integrator.getNewObject();
-				hedspiObjects.put(newObject);
-				list_1.setSelectedValue(newObject, true);
+				if (newObject != null) {
+					hedspiObjects.put(newObject);
+					list_1.setSelectedValue(newObject, true);
+				}
 			}
 		});
 		panel.add(btnAdd);
@@ -92,30 +95,32 @@ public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				T val = getFocusedValue();
-				if (val != null && integrator.isRemovable(val)){
+				if (val != null && integrator.isRemovable(val)) {
 					integrator.beforeRemove(val);
 					hedspiObjects.removeObject(val);
-				}
-				else
-					JOptionPane.showMessageDialog(null, "Cannot delete object", "Delete failed", JOptionPane.ERROR_MESSAGE);
+				} else
+					JOptionPane.showMessageDialog(null, "Cannot delete object",
+							"Delete failed", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		panel.add(btnRemove);
-		
+
 		JButton btnRemoveAll = new JButton("Remove all");
 		btnRemoveAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<T> values = new ArrayList<>(hedspiObjects.values());
 				int cnt = 0;
-				for(T it : values){
-					if (integrator.isRemovable(it)){
+				for (T it : values) {
+					if (integrator.isRemovable(it)) {
 						integrator.beforeRemove(it);
 						T ret = hedspiObjects.removeObject(it);
 						if (ret != null)
 							cnt++;
 					}
 				}
-				JOptionPane.showMessageDialog(null, "Deleted / all : " + cnt + "/" + values.size(), "Delete result", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Deleted / all : " + cnt
+						+ "/" + values.size(), "Delete result",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		panel.add(btnRemoveAll);
@@ -124,7 +129,6 @@ public class ObjectListPanel<T extends HedspiObject> extends JPanel {
 		if (defaultValue != null)
 			list_1.setSelectedValue(defaultValue, true);
 	}
-	
 
 	private T getFocusedValue() {
 		T val = list_1.getSelectedValue();

@@ -123,15 +123,17 @@ public class Student extends HedspiObject {
 
 			@Override
 			public Student getNewObject() {
-				return new Student(getStudents().getNewId(),
-						Contact.getNewContact(), DEFAULT_ENROLLPOINT,
-						DEFAULT_ENROLLYEAR, HedspiClass.getClasses()
-								.getDefaultValue(), DEFAULT_MSSV);
+				HedspiClass val = HedspiClass.getClasses().getDefaultValue();
+				if (val != null)
+					return new Student(getStudents().getNewId(),
+							Contact.getNewContact(), DEFAULT_ENROLLPOINT,
+							DEFAULT_ENROLLYEAR, val, DEFAULT_MSSV);
+				return null;
 			}
 
 			@Override
 			public void beforeRemove(Student object) {
-				object.getMyClass().getStudents().remove(this);
+				object.getMyClass().getStudents().remove(object);
 			}
 		};
 	}
@@ -148,17 +150,11 @@ public class Student extends HedspiObject {
 	private static boolean isSearchNote;
 	private static boolean isSearchPhone;
 
-	public static void setSearchStringArg(
-			boolean isSearchAddress,
-			boolean isSearchBirthday,
-			boolean isSearchClass, 
-			boolean isSearchEmail,
-			boolean isSearchEnrollPoint,
-			boolean isSearchEnrollYear,
-			boolean isSearchImageUrls,
-			boolean isSearchMssv,
-			boolean isSearchName,
-			boolean isSearchNote,
+	public static void setSearchStringArg(boolean isSearchAddress,
+			boolean isSearchBirthday, boolean isSearchClass,
+			boolean isSearchEmail, boolean isSearchEnrollPoint,
+			boolean isSearchEnrollYear, boolean isSearchImageUrls,
+			boolean isSearchMssv, boolean isSearchName, boolean isSearchNote,
 			boolean isSearchPhone) {
 		Student.isSearchAddress = isSearchAddress;
 		Student.isSearchBirthday = isSearchBirthday;
@@ -186,7 +182,7 @@ public class Student extends HedspiObject {
 			ret += " " + String.valueOf(getEnrollYear());
 		if (isSearchEnrollPoint)
 			ret += " " + String.valueOf(getEnrollPoint());
-		
+
 		return ret;
 	}
 

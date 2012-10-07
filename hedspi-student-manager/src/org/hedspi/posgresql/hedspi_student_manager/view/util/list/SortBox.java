@@ -22,8 +22,9 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class SortBox<T extends Object> extends JPanel {
-	
-	public static int smartCompare(String arg0, String arg1, String text, boolean isCase){
+
+	public static int smartCompare(String arg0, String arg1, String text,
+			boolean isCase) {
 		int t1 = getDistance(arg0.toString(), text, isCase);
 		int t2 = getDistance(arg1.toString(), text, isCase);
 		if (t1 != t2)
@@ -32,7 +33,7 @@ public class SortBox<T extends Object> extends JPanel {
 			return arg0.toString().compareTo(arg1.toString());
 		return arg0.toString().compareToIgnoreCase(arg1.toString());
 	}
-	
+
 	private static int getDistance(String string, String text, boolean isCase) {
 		int[][] f = new int[string.length() + 1][text.length() + 1];
 		for (int i = 0; i <= string.length(); i++)
@@ -52,7 +53,6 @@ public class SortBox<T extends Object> extends JPanel {
 			}
 		return f[string.length()][text.length()];
 	}
-
 
 	/**
 	 * 
@@ -168,7 +168,8 @@ public class SortBox<T extends Object> extends JPanel {
 
 			@Override
 			public int compare(Object arg0, Object arg1) {
-				return smartCompare(arg0.toString(), arg1.toString(), text, isCase);
+				return smartCompare(arg0.toString(), arg1.toString(), text,
+						isCase);
 			}
 		});
 

@@ -31,11 +31,22 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JList<T> list;
+
+	public void setSelectedValue(Object anObject, boolean shouldScroll) {
+		list.setSelectedValue(anObject, shouldScroll);
+	}
+
 	private HedspiObjects<T> hedspiObject;
 
 	public ListEditor() {
 		this(new HedspiObjects<T>());
 	}
+
+	public abstract T getNewObject(String val);
+
+	public abstract boolean isRemovable(T object);
+
+	public abstract void beforeRemove(T object);
 
 	/**
 	 * Create the panel.
@@ -71,10 +82,14 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String val = textField.getText();
-				T newEl = getNewElement(val);
-				hedspiObject.put(newEl);
-				textField.setText("");
-				list.setSelectedValue(newEl, true);
+				if (!val.equals("")) {
+					T newEl = getNewObject(val);
+					if (newEl != null) {
+						hedspiObject.put(newEl);
+						textField.setText("");
+						list.setSelectedValue(newEl, true);
+					}
+				}
 			}
 		});
 		add(btnAdd, "cell 1 0,growx,aligny center");
@@ -107,9 +122,13 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 		btnRemove.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<T> arr =  list.getSelectedValuesList();
-				for (T it : arr)
-					hedspiObject.removeObject(it);
+				List<T> arr = list.getSelectedValuesList();
+				for (T it : arr) {
+					if (isRemovable(it)) {
+						beforeRemove(it);
+						hedspiObject.removeObject(it);
+					}
+				}
 				T defaultValue = hedspiObject.getDefaultValue();
 				if (defaultValue != null)
 					list.setSelectedValue(defaultValue, true);
@@ -123,8 +142,6 @@ public abstract class ListEditor<T extends HedspiObject> extends JPanel {
 	public HedspiObjects<T> getHedspiObject() {
 		return hedspiObject;
 	}
-
-	public abstract T getNewElement(String val);
 
 	public void setHedspiObject(HedspiObjects<T> hedspiObject) {
 		this.hedspiObject = hedspiObject;

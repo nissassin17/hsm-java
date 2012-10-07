@@ -21,7 +21,7 @@ public class OADateSpinner<T> extends OAComponentAbstract<Date, T> {
 		model = new SpinnerDateModel();
 		spinner = new JSpinner(model);
 		model.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				updateObjectValue();

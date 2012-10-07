@@ -1,7 +1,8 @@
 package org.hedspi.posgresql.hedspi_student_manager.view.util.list;
 
+import org.hedspi.posgresql.hedspi_student_manager.model.contact.Contact;
+import org.hedspi.posgresql.hedspi_student_manager.model.contact.address.City;
 import org.hedspi.posgresql.hedspi_student_manager.model.contact.address.District;
-import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObjects;
 
 public class DistrictListEditor extends ListEditor<District> {
 
@@ -9,19 +10,37 @@ public class DistrictListEditor extends ListEditor<District> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private City city;
 
 	public DistrictListEditor() {
 		super();
 	}
 
-	public DistrictListEditor(HedspiObjects<District> hedspiObjectArg) {
-		super(hedspiObjectArg);
+	@Override
+	public boolean isRemovable(District object) {
+		for (Contact it : Contact.getContacts().values())
+			if (it.getDistrict() == object)
+				return false;
+		return true;
 	}
 
 	@Override
-	public District getNewElement(String val) {
-		// TODO: not implemented
-		return new District(val);
+	public void beforeRemove(District object) {
+		object.getCity().getDistricts().removeObject(object);
 	}
 
+	public void setCity(City obj) {
+		city = obj;
+		super.setHedspiObject(obj.getDistricts());
+		District tt = obj.getDistricts().getDefaultValue();
+		if (tt != null)
+			super.setSelectedValue(tt, true);
+	}
+
+	@Override
+	public District getNewObject(String val) {
+		if (city == null)
+			return null;
+		return new District(District.getDistricts().getNewId(), val, city);
+	}
 }

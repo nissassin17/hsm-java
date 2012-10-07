@@ -5,10 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.hedspi.posgresql.hedspi_student_manager.model.contact.address.City;
-import org.hedspi.posgresql.hedspi_student_manager.model.contact.address.District;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.list.DistrictListEditor;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectViewPanel;
-import org.hedspi.posgresql.hedspi_student_manager.view.util.list.ListEditor;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.IObjectUpdater;
 import org.hedspi.posgresql.hedspi_student_manager.view.util.object_associated.OATextField;
 
@@ -24,7 +22,7 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField_1;
-	private ListEditor<District> panel;
+	private DistrictListEditor panel;
 	private OATextField<City> oaName;
 
 	/**
@@ -44,10 +42,8 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("70px"),
 				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("86px:grow"),},
-			new RowSpec[] {
-				FormFactory.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),}));
+				ColumnSpec.decode("86px:grow"), }, new RowSpec[] {
+				FormFactory.LINE_GAP_ROWSPEC, RowSpec.decode("20px"), }));
 
 		JLabel lblName = DefaultComponentFactory.getInstance().createLabel(
 				"City name");
@@ -79,7 +75,7 @@ public class CityPanel extends JPanel implements IObjectViewPanel<City> {
 
 	@Override
 	public void setObject(City obj) {
-		panel.setHedspiObject(obj.getDistricts());
+		panel.setCity(obj);
 		oaName.setObject(obj);
 	}
 }

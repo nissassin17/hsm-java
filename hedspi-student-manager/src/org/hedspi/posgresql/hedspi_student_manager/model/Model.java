@@ -54,14 +54,14 @@ public class Model implements IModel {
 		case "cloneDatabase":
 			appendDatabase();
 			return true;
-			
+
 		case "reload":
 			reload();
 			return true;
-			
+
 		case "commit":
 			return commit();
-			
+
 		default:
 			Control.getInstance()
 					.getLogger()
@@ -83,7 +83,7 @@ public class Model implements IModel {
 		Student.getStudents().clear();
 		appendDatabase();
 	}
-	
+
 	private void appendDatabase() {
 		Pair<HedspiObjects<City>, HedspiObjects<District>> val = AddressService
 				.getAddresses();
@@ -92,11 +92,17 @@ public class Model implements IModel {
 		Contact.getContacts().putAll(ContactService.getContacts());
 		HedspiClass.getClasses().putAll(ClassService.getClasses());
 		Student.getStudents().putAll(StudentService.getStudentList());
-		
-		//check class and city
+
+		// check class and city
 		if (HedspiClass.getClasses().isEmpty())
-			Control.getInstance().getLogger().log(Level.SEVERE, "Class database is empty. Create at least one to avoid severe errors");
+			Control.getInstance()
+					.getLogger()
+					.log(Level.SEVERE,
+							"Class database is empty. Create at least one to avoid severe errors");
 		if (City.getCities().isEmpty())
-			Control.getInstance().getLogger().log(Level.SEVERE, "City database is empty. Create at least one to avoid severe errors");
+			Control.getInstance()
+					.getLogger()
+					.log(Level.SEVERE,
+							"City database is empty. Create at least one to avoid severe errors");
 	}
 }

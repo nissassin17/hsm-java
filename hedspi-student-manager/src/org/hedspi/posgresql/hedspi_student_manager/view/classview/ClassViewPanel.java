@@ -3,7 +3,10 @@ package org.hedspi.posgresql.hedspi_student_manager.view.classview;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -22,9 +25,6 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ClassViewPanel extends JPanel implements
 		IObjectViewPanel<HedspiClass> {
@@ -52,16 +52,12 @@ public class ClassViewPanel extends JPanel implements
 	public ClassViewPanel() {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				ColumnSpec.decode("default:grow"), }, new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),}));
+				RowSpec.decode("default:grow"), }));
 
 		JPanel panel = new JPanel();
 		add(panel, "2, 2, fill, fill");
@@ -91,32 +87,33 @@ public class ClassViewPanel extends JPanel implements
 		textFieldClassName = oaClassName.getTextField();
 		panel.add(textFieldClassName, "3, 2, fill, top");
 		textFieldClassName.setColumns(10);
-		
+
 		JLabel lblStudentList = new JLabel("Student list");
 		add(lblStudentList, "2, 4");
-		
+
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "2, 6, fill, fill");
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_1.columnWidths = new int[] { 0, 0, 0 };
+		gbl_panel_1.rowHeights = new int[] { 0, 0 };
+		gbl_panel_1.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_panel_1.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
-		
+
 		JButton btnMoveTo = new JButton("Move to");
 		btnMoveTo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HedspiClass selectedClass = (HedspiClass) comboBox.getSelectedItem();
+				HedspiClass selectedClass = (HedspiClass) comboBox
+						.getSelectedItem();
 				HedspiClass currentClass = getCurrentClass();
 				if (selectedClass == null || selectedClass == currentClass)
 					return;
-				
+
 				Student[] arr = new Student[listClass.getSelectedIndices().length];
 				listClass.getSelectedValuesList().toArray(arr);
-				for(Student it : arr)
+				for (Student it : arr)
 					currentClass.getStudents().removeObject(it);
-				for(Student it : arr){
+				for (Student it : arr) {
 					selectedClass.getStudents().put(it);
 					it.setMyClass(selectedClass);
 				}
@@ -127,7 +124,7 @@ public class ClassViewPanel extends JPanel implements
 		gbc_btnMoveTo.gridx = 0;
 		gbc_btnMoveTo.gridy = 0;
 		panel_1.add(btnMoveTo, gbc_btnMoveTo);
-		
+
 		comboBox = new JComboBox<>(HedspiClass.getClasses().getComboBoxModel());
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -155,6 +152,9 @@ public class ClassViewPanel extends JPanel implements
 	public void setObject(HedspiClass obj) {
 		oaClassName.setObject(obj);
 		listClass.setModel(obj.getStudents().getListModel());
+		Student st = obj.getStudents().getDefaultValue();
+		if (st != null)
+			listClass.setSelectedValue(st, true);
 		setCurrentClass(obj);
 	}
 }
