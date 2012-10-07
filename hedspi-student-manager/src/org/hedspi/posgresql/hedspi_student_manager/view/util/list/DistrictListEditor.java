@@ -27,6 +27,7 @@ public class DistrictListEditor extends ListEditor<District> {
 	@Override
 	public void beforeRemove(District object) {
 		object.getCity().getDistricts().removeObject(object);
+		District.getDistricts().removeObject(object);
 	}
 
 	public void setCity(City obj) {
@@ -41,6 +42,9 @@ public class DistrictListEditor extends ListEditor<District> {
 	public District getNewObject(String val) {
 		if (city == null)
 			return null;
-		return new District(District.getDistricts().getNewId(), val, city);
+		District district = new District(District.getDistricts().getNewId(), val, city);
+		District.getDistricts().put(district);
+		//Not need to do this city.getDistricts().put(district);
+		return district;
 	}
 }

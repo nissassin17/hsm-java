@@ -124,16 +124,21 @@ public class Student extends HedspiObject {
 			@Override
 			public Student getNewObject() {
 				HedspiClass val = HedspiClass.getClasses().getDefaultValue();
-				if (val != null)
-					return new Student(getStudents().getNewId(),
-							Contact.getNewContact(), DEFAULT_ENROLLPOINT,
+				if (val != null){
+					Contact contact = Contact.getNewContact();
+					Student st = new Student(getStudents().getNewId(),
+							contact, DEFAULT_ENROLLPOINT,
 							DEFAULT_ENROLLYEAR, val, DEFAULT_MSSV);
+					val.getStudents().put(st);
+					return st;
+				}
 				return null;
 			}
 
 			@Override
 			public void beforeRemove(Student object) {
-				object.getMyClass().getStudents().remove(object);
+				object.getMyClass().getStudents().removeObject(object);
+				Contact.getContacts().removeObject(object.getContact());
 			}
 		};
 	}

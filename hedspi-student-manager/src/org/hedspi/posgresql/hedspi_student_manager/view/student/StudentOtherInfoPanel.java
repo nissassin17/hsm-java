@@ -83,14 +83,14 @@ public class StudentOtherInfoPanel extends JPanel {
 
 					@Override
 					public HedspiClass getValue(Student object) {
-
 						return object.getMyClass();
 					}
 
 					@Override
 					public void setValue(Student object, HedspiClass value) {
-						object.getMyClass().getStudents().remove(object);
+						object.getMyClass().getStudents().removeObject(object);
 						object.setMyClass(value);
+						value.getStudents().put(object);
 					}
 				});
 		comboBoxClass = oaComboBox.getComboBox();
@@ -152,7 +152,6 @@ public class StudentOtherInfoPanel extends JPanel {
 	}
 
 	public void setStudent(Student obj) {
-
 		oaEnrollYear.setObject(obj);
 		oaTextFieldID.setObject(obj);
 		oaEnrollPoint.setObject(obj);
