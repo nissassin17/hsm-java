@@ -28,10 +28,6 @@ public class Contact extends HedspiObject {
 		return contacts;
 	}
 
-	public static void setContacts(HedspiObjects<Contact> contacts) {
-		Contact.contacts = contacts;
-	}
-
 	private String note;
 
 	private NewLineListManipulator image;

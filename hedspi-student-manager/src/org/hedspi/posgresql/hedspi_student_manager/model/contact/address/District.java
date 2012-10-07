@@ -16,10 +16,6 @@ public class District extends HedspiObject {
 		return districts;
 	}
 
-	public static void setDistricts(HedspiObjects<District> districts) {
-		District.districts = districts;
-	}
-
 	private String name;
 
 	private City city;

@@ -21,10 +21,6 @@ public class Student extends HedspiObject {
 		return students;
 	}
 
-	public static void setStudents(HedspiObjects<Student> students) {
-		Student.students = students;
-	}
-
 	private Contact contact;
 
 	private double enrollPoint;

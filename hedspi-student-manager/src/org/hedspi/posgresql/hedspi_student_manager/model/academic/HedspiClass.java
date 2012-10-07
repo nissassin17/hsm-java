@@ -22,10 +22,6 @@ public class HedspiClass extends HedspiObject {
 		return classes;
 	}
 
-	public static void setClasses(HedspiObjects<HedspiClass> classes) {
-		HedspiClass.classes = classes;
-	}
-
 	private String name;
 
 	private Lecturer lecturer;
@@ -82,7 +78,9 @@ public class HedspiClass extends HedspiObject {
 			
 			@Override
 			public boolean isRemovable(HedspiClass object) {
-				return object.getStudents().isEmpty();
+				if (!object.getStudents().isEmpty())
+					return false;
+				return getClasses().size() > 1;
 			}
 			
 			@Override
@@ -94,6 +92,8 @@ public class HedspiClass extends HedspiObject {
 			public void beforeRemove(HedspiClass object) {
 				if (!object.getStudents().isEmpty())
 					Control.getInstance().getLogger().log(Level.SEVERE, "Deleting class that still contains students could make future unhandled errors");
+				if (getClasses().size() <= 1)
+					Control.getInstance().getLogger().log(Level.SEVERE, "Delete last class. Create at least one itermidiately to avoid potential errors");
 			}
 		};
 	}

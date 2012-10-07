@@ -25,10 +25,6 @@ public class City extends HedspiObject {
 		return cities;
 	}
 
-	public static void setCities(HedspiObjects<City> cities) {
-		City.cities = cities;
-	}
-
 	public City(String id) {
 		super(id);
 	}
@@ -74,7 +70,9 @@ public class City extends HedspiObject {
 			
 			@Override
 			public boolean isRemovable(City object) {
-				return object.getDistricts().isEmpty();
+				if (!object.getDistricts().isEmpty())
+					return false;
+				return getCities().size() > 1;
 			}
 			
 			@Override
@@ -86,6 +84,8 @@ public class City extends HedspiObject {
 			public void beforeRemove(City object) {
 				if (!object.getDistricts().isEmpty())
 					Control.getInstance().getLogger().log(Level.SEVERE, "Deleting city that still contains districts could make unhandled errors");
+				if (getCities().size() <= 1)
+					Control.getInstance().getLogger().log(Level.SEVERE, "Delete last class. Create at least one itermidiately to avoid potential errors");
 			}
 		};
 	}
