@@ -151,6 +151,11 @@ public class Contact extends HedspiObject {
 		return getName();
 	}
 
+	@Override
+	public String getClassName() {
+		return "Contact";
+	}
+
 	public String getInsertQuery() {
 		return String.format(
 				"insert into \"Contact\" (\"FirstName\", \"LastName\", \"Sex\", \"DOB\", \"Email\", \"Phone\", \"ImageUrl\", \"Notes\", \"Home\", \"CT#\", \"DT#\")" +
@@ -184,6 +189,30 @@ public class Contact extends HedspiObject {
 				District.getDistricts().getDefaultValue());
 		getContacts().put(contact);
 		return contact;
+	}
+
+	public String getSearchString(boolean isSearchAddress,
+			boolean isSearchBirthday, boolean isSearchEmail,
+			boolean isSearchImageUrls, boolean isSearchName,
+			boolean isSearchNote, boolean isSearchPhone) {
+		String ret = "";
+		
+		if (isSearchName)
+			ret += getName();
+		if (isSearchAddress)
+			ret += " " + getHome() + " " + getDistrict().getName() + getDistrict().getCity().getName();
+		if (isSearchEmail)
+			ret += " " + getEmail().getEndlnString().replace("\n", " ");
+		if (isSearchBirthday)
+			ret += " " + getDob().toString();
+		if (isSearchNote)
+			ret += " " + getNote();
+		if (isSearchPhone)
+			ret += " " + getPhone().getEndlnString().replace("\n", " ");
+		if (isSearchImageUrls)
+			ret += " " + getImage().getEndlnString().replace("\n",  " ");
+		
+		return ret;
 	}
 
 }

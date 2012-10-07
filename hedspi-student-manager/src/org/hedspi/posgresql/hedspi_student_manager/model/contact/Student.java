@@ -8,6 +8,11 @@ import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectListInt
 
 public class Student extends HedspiObject {
 
+	@Override
+	public String getClassName() {
+		return "Student";
+	}
+
 	public static final String ID_CODE = "ST#";
 	public static final String ENROLL_POINT_CODE = "EnrollPoint";
 	public static final String ENROLL_YEAR_CODE = "EnrollYear";
@@ -46,15 +51,19 @@ public class Student extends HedspiObject {
 		this.myClass = myClass;
 		Mssv = mssv;
 	}
+
 	public Contact getContact() {
 		return contact;
 	}
+
 	public double getEnrollPoint() {
 		return enrollPoint;
 	}
+
 	public int getEnrollYear() {
 		return enrollYear;
 	}
+
 	public String getMssv() {
 		return Mssv;
 	}
@@ -93,39 +102,92 @@ public class Student extends HedspiObject {
 	}
 
 	public String getInsertQuery() {
-		return String.format("insert into \"Student\" (\"EnrollPoint\", \"EnrollYear\", \"CT#\", \"CL#\", \"MSSV\") " +
-				"values(%s, %s, %s, %s, '%s')",
-				HedspiUtil.quoteConvert(String.valueOf(getEnrollPoint())),
-				HedspiUtil.quoteConvert(String.valueOf(getEnrollYear())),
-				HedspiUtil.quoteConvert(super.getId()),
-				HedspiUtil.quoteConvert(getMyClass().getId()),
-				HedspiUtil.quoteConvert(getMssv())
-				);
+		return String
+				.format("insert into \"Student\" (\"EnrollPoint\", \"EnrollYear\", \"CT#\", \"CL#\", \"MSSV\") "
+						+ "values(%s, %s, %s, %s, '%s')",
+						HedspiUtil.quoteConvert(String
+								.valueOf(getEnrollPoint())),
+						HedspiUtil.quoteConvert(String.valueOf(getEnrollYear())),
+						HedspiUtil.quoteConvert(super.getId()), HedspiUtil
+								.quoteConvert(getMyClass().getId()), HedspiUtil
+								.quoteConvert(getMssv()));
 	}
 
 	public static IObjectListIntegrator<Student> getStudentGenner() {
 		return new IObjectListIntegrator<Student>() {
-			
+
 			@Override
 			public boolean isRemovable(Student object) {
 				return true;
 			}
-			
+
 			@Override
 			public Student getNewObject() {
-				return new Student(getStudents().getNewId(), 
-						Contact.getNewContact(), 
-						DEFAULT_ENROLLPOINT, 
-						DEFAULT_ENROLLYEAR, 
-						HedspiClass.getClasses().getDefaultValue(), 
-						DEFAULT_MSSV);
+				return new Student(getStudents().getNewId(),
+						Contact.getNewContact(), DEFAULT_ENROLLPOINT,
+						DEFAULT_ENROLLYEAR, HedspiClass.getClasses()
+								.getDefaultValue(), DEFAULT_MSSV);
 			}
-			
+
 			@Override
 			public void beforeRemove(Student object) {
 				object.getMyClass().getStudents().remove(this);
 			}
 		};
+	}
+
+	private static boolean isSearchAddress;
+	private static boolean isSearchBirthday;
+	private static boolean isSearchClass;
+	private static boolean isSearchEmail;
+	private static boolean isSearchEnrollPoint;
+	private static boolean isSearchEnrollYear;
+	private static boolean isSearchImageUrls;
+	private static boolean isSearchMssv;
+	private static boolean isSearchName;
+	private static boolean isSearchNote;
+	private static boolean isSearchPhone;
+
+	public static void setSearchStringArg(
+			boolean isSearchAddress,
+			boolean isSearchBirthday,
+			boolean isSearchClass, 
+			boolean isSearchEmail,
+			boolean isSearchEnrollPoint,
+			boolean isSearchEnrollYear,
+			boolean isSearchImageUrls,
+			boolean isSearchMssv,
+			boolean isSearchName,
+			boolean isSearchNote,
+			boolean isSearchPhone) {
+		Student.isSearchAddress = isSearchAddress;
+		Student.isSearchBirthday = isSearchBirthday;
+		Student.isSearchClass = isSearchClass;
+		Student.isSearchEmail = isSearchEmail;
+		Student.isSearchEnrollPoint = isSearchEnrollPoint;
+		Student.isSearchEnrollYear = isSearchEnrollYear;
+		Student.isSearchImageUrls = isSearchImageUrls;
+		Student.isSearchMssv = isSearchMssv;
+		Student.isSearchName = isSearchName;
+		Student.isSearchNote = isSearchNote;
+		Student.isSearchPhone = isSearchPhone;
+	}
+
+	@Override
+	public String getSearchString() {
+		String ret = getContact().getSearchString(isSearchAddress,
+				isSearchBirthday, isSearchEmail, isSearchImageUrls,
+				isSearchName, isSearchNote, isSearchPhone);
+		if (isSearchClass)
+			ret += " " + getMyClass().getName();
+		if (isSearchMssv)
+			ret += " " + getMssv();
+		if (isSearchEnrollYear)
+			ret += " " + String.valueOf(getEnrollYear());
+		if (isSearchEnrollPoint)
+			ret += " " + String.valueOf(getEnrollPoint());
+		
+		return ret;
 	}
 
 }

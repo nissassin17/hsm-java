@@ -22,6 +22,37 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class SortBox<T extends Object> extends JPanel {
+	
+	public static int smartCompare(String arg0, String arg1, String text, boolean isCase){
+		int t1 = getDistance(arg0.toString(), text, isCase);
+		int t2 = getDistance(arg1.toString(), text, isCase);
+		if (t1 != t2)
+			return t2 - t1;
+		if (isCase)
+			return arg0.toString().compareTo(arg1.toString());
+		return arg0.toString().compareToIgnoreCase(arg1.toString());
+	}
+	
+	private static int getDistance(String string, String text, boolean isCase) {
+		int[][] f = new int[string.length() + 1][text.length() + 1];
+		for (int i = 0; i <= string.length(); i++)
+			for (int j = 0; j <= text.length(); j++)
+				f[i][j] = 0;
+		for (int i = 1; i <= string.length(); i++)
+			for (int j = 1; j <= text.length(); j++) {
+				f[i][j] = Math.max(f[i - 1][j], f[i][j - 1]);
+				char c1 = string.charAt(i - 1);
+				char c2 = text.charAt(j - 1);
+				if (!isCase) {
+					c1 = Character.toLowerCase(c1);
+					c2 = Character.toLowerCase(c2);
+				}
+				if (c1 == c2)
+					f[i][j] = Math.max(f[i][j], f[i - 1][j - 1] + 1);
+			}
+		return f[string.length()][text.length()];
+	}
+
 
 	/**
 	 * 
@@ -137,33 +168,7 @@ public class SortBox<T extends Object> extends JPanel {
 
 			@Override
 			public int compare(Object arg0, Object arg1) {
-				int t1 = getDistance(arg0.toString(), text);
-				int t2 = getDistance(arg1.toString(), text);
-				if (t1 != t2)
-					return t2 - t1;
-				if (isCase)
-					return arg0.toString().compareTo(arg1.toString());
-				return arg0.toString().compareToIgnoreCase(arg1.toString());
-			}
-
-			private int getDistance(String string, String text) {
-				int[][] f = new int[string.length() + 1][text.length() + 1];
-				for (int i = 0; i <= string.length(); i++)
-					for (int j = 0; j <= text.length(); j++)
-						f[i][j] = 0;
-				for (int i = 1; i <= string.length(); i++)
-					for (int j = 1; j <= text.length(); j++) {
-						f[i][j] = Math.max(f[i - 1][j], f[i][j - 1]);
-						char c1 = string.charAt(i - 1);
-						char c2 = text.charAt(j - 1);
-						if (!isCase) {
-							c1 = Character.toLowerCase(c1);
-							c2 = Character.toLowerCase(c2);
-						}
-						if (c1 == c2)
-							f[i][j] = Math.max(f[i][j], f[i - 1][j - 1] + 1);
-					}
-				return f[string.length()][text.length()];
+				return smartCompare(arg0.toString(), arg1.toString(), text, isCase);
 			}
 		});
 

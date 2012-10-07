@@ -22,8 +22,13 @@ import org.hedspi.posgresql.hedspi_student_manager.control.Control;
 import org.hedspi.posgresql.hedspi_student_manager.view.IView;
 import org.hedspi.posgresql.hedspi_student_manager.view.contact.address.AddressPanel;
 import org.hedspi.posgresql.hedspi_student_manager.view.help.about.AboutBox;
+import org.hedspi.posgresql.hedspi_student_manager.view.search.SearchPane;
 import org.hedspi.posgresql.hedspi_student_manager.view.student.StudentPanel;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class AllFunction extends JFrame implements IView {
 
@@ -106,6 +111,12 @@ public class AllFunction extends JFrame implements IView {
 
 		org.hedspi.posgresql.hedspi_student_manager.view.classview.ClassPanel splitPane = new org.hedspi.posgresql.hedspi_student_manager.view.classview.ClassPanel();
 		tabbedPaneAll.addTab("Class", null, splitPane, null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		tabbedPaneAll.addTab("Search", null, scrollPane, null);
+		
+		SearchPane searchPanel = new SearchPane();
+		scrollPane.setViewportView(searchPanel);
 	}
 
 	@Override

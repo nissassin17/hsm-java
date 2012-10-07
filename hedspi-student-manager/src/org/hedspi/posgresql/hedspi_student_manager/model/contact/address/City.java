@@ -10,6 +10,11 @@ import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectListInt
 
 public class City extends HedspiObject {
 
+	@Override
+	public String getClassName() {
+		return "City";
+	}
+
 	public static final String ID_CODE = "CY#";
 	public static final String NAME_CODE = "Name";
 
@@ -88,6 +93,26 @@ public class City extends HedspiObject {
 					Control.getInstance().getLogger().log(Level.SEVERE, "Delete last class. Create at least one itermidiately to avoid potential errors");
 			}
 		};
+	}
+
+	private static boolean isSearchName = true;
+	private static boolean isSearchDistricts = true;
+	public static void setSearchStringArg(boolean selected, boolean selected2) {
+		isSearchName = selected;
+		isSearchDistricts = selected2;
+	}
+
+	@Override
+	public String getSearchString() {
+		String ret = "";
+		if (isSearchName)
+			ret = getName();
+		if (isSearchDistricts){
+			ret += "\n";
+			for(District it : getDistricts().values())
+				ret += it.getName() + ", ";
+		}
+		return ret;
 	}
 
 }

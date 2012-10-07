@@ -12,6 +12,11 @@ import org.hedspi.posgresql.hedspi_student_manager.view.util.list.IObjectListInt
 
 public class HedspiClass extends HedspiObject {
 
+	@Override
+	public String getClassName() {
+		return "Class";
+	}
+
 	public static final String ID_CODE = "CL#";
 	public static final String NAME_CODE = "Name";
 	private static HedspiObjects<HedspiClass> classes;
@@ -96,5 +101,23 @@ public class HedspiClass extends HedspiObject {
 					Control.getInstance().getLogger().log(Level.SEVERE, "Delete last class. Create at least one itermidiately to avoid potential errors");
 			}
 		};
+	}
+
+	private static boolean isSearchName;
+	private static boolean isSearchStudents;
+	public static void setSearchStringArg(boolean isSearchName, boolean isSearchStudents) {
+		HedspiClass.isSearchStudents = isSearchStudents;
+		HedspiClass.isSearchName = isSearchName;
+	}
+
+	@Override
+	public String getSearchString() {
+		String ret = "";
+		if (isSearchName)
+			ret = getName();
+		if (isSearchStudents)
+			for(Student it : getStudents().values())
+				ret += " " + it.getName();
+		return ret;
 	}
 }

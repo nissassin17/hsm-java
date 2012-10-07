@@ -7,6 +7,11 @@ import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 
 public class Lecturer extends HedspiObject {
 
+	@Override
+	public String getClassName() {
+		return "Lecturer";
+	}
+
 	public static final String ID_CODE = "LT#";
 
 	private Contact contact;

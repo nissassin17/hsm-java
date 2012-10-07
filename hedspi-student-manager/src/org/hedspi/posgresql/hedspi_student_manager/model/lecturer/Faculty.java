@@ -4,6 +4,11 @@ import org.hedspi.posgresql.hedspi_student_manager.model.hedspi.HedspiObject;
 
 public class Faculty extends HedspiObject {
 
+	@Override
+	public String getClassName() {
+		return "Faculty";
+	}
+
 	public static final String ID_CODE = "FC#";
 	public static final String NAME_CODE = "Name";
 
