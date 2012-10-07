@@ -89,8 +89,8 @@ public class StudentOtherInfoPanel extends JPanel {
 
 					@Override
 					public void setValue(Student object, HedspiClass value) {
+						object.getMyClass().getStudents().remove(object);
 						object.setMyClass(value);
-
 					}
 				});
 		comboBoxClass = oaComboBox.getComboBox();
