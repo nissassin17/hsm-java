@@ -63,6 +63,7 @@ public class SearchPane extends JPanel {
 	private JCheckBox chckbxDistrict;
 	private JCheckBoxMenuItem chckbxmntmDistrictName;
 	private JCheckBoxMenuItem chckbxmntmDistrictCity;
+	private JCheckBox chckbxClass;
 
 	/**
 	 * Create the panel.
@@ -172,7 +173,7 @@ public class SearchPane extends JPanel {
 		chckbxmntmStudentBirthday.setSelected(true);
 		popupMenu.add(chckbxmntmStudentBirthday);
 
-		JCheckBox chckbxClass = new JCheckBox("Class");
+		chckbxClass = new JCheckBox("Class");
 		panel_1.add(chckbxClass, "6, 2");
 
 		JPopupMenu popupMenu_1 = new JPopupMenu();
@@ -285,11 +286,15 @@ public class SearchPane extends JPanel {
 				HedspiClass.setSearchStringArg(
 						chckbxmntmClassName.isSelected(),
 						chckbxmntmClassStudents.isSelected());
+				if (chckbxClass.isSelected())
+					searchContainer.addObjects(HedspiClass.getClasses());
 
 				// district
 				District.setSearchStringArg(
 						chckbxmntmDistrictName.isSelected(),
 						chckbxmntmDistrictCity.isSelected());
+				if (chckbxDistrict.isSelected())
+					searchContainer.addObjects(District.getDistricts());
 
 				// lecturer
 				// Not implemented
